@@ -1,0 +1,22 @@
+{
+  "name": "bham_city_sensor",
+  "version": "0.0.0",
+  "description": "birmingham city sensor project",
+  "main": "index.js",
+  "dependencies": {
+    "aws-iot-device-sdk": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fdorothy/bham_city_sensor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fdorothy/bham_city_sensor/issues"
+  }
+}
