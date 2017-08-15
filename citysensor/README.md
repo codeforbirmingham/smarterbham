@@ -19,21 +19,22 @@ tar xzvf ~/node-v4.2.4-linux-armv6l.tar.gz --strip=1
 # checking out the code
 
 ```
-git clone https://github.com/fdorothy/bham_city_sensor.git
-cd bham_city_sensor
-npm install
+git clone https://github.com/codeforbirmingham/smarterbham
+cd smarterbham/citysensor
+npm i
 ```
 
 # configuration
 
-Download your thing certificates from AWS and place them in the certs directory. You will also need the Symantec root certifacate. https://www.symantec.com/content/en/us/enterprise/verisign/roots/VeriSign-Class%203-Public-Primary-Certification-Authority-G5.pem root-CA.crt
+Download your thing certificates from AWS and place them in the certs directory. You will also need the Symantec root certifacate: https://www.symantec.com/content/en/us/enterprise/verisign/roots/VeriSign-Class%203-Public-Primary-Certification-Authority-G5.pem
 
 ```
 # copy over your aws thing certificates
+mkdir certs
 cp ~/Downloads/bqqbbg8gaa-certicate.pem.crt certs/
 cp ~/Downloads/bqqbbg8gaa-private.pem.key certs/
 cp ~/Downloads/bqqbbg8gaa-public.pem.key certs/
-cp ~/Downloads/VeriSign* certs/root-CA.crt
+curl https://www.symantec.com/content/en/us/enterprise/verisign/roots/VeriSign-Class%203-Public-Primary-Certification-Authority-G5.pem > certs/root-CA.crt
 ```
 
 You will also need to modify aws_config.js to include information about your thing. You can get this information from the AWS IoT console.
@@ -52,11 +53,11 @@ You will also need to modify aws_config.js to include information about your thi
 
 # running
 
-This will run and update the thing's shadow to include new sensor data every so often. You can log into the AWS IoT console and watch the MQTT events for your thing.
+```
+npm start
+```
 
-```
-node index.js -f certs/ -F aws_config.js
-```
+This will run and update the thing's shadow to include new sensor data every so often. You can log into the AWS IoT console and watch the MQTT events for your thing.
 
 # scripts
 
