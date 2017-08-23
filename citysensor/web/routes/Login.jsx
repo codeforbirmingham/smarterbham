@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 // Components
-import { Button } from 'react-toolbox/lib/button';
+import Button from 'react-toolbox/lib/button/Button';
 import Input from 'react-toolbox/lib/input';
+
+const styles = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100%',
+};
 
 class LoginView extends Component {
   constructor() {
@@ -19,17 +26,17 @@ class LoginView extends Component {
 
   render() {
     return (
-      <div>
+      <div style={styles}>
         <form>
           <Input
             type="text"
             value={this.state.username}
-            onChange={(e, newValue) => this.setState({ username: newValue })}
+            onChange={val => this.setState({ username: val })}
           />
           <Input
             type="password"
             value={this.state.password}
-            onChange={(e, newValue) => this.setState({ password: newValue })}
+            onChange={val => this.setState({ password: val })}
           />
           <Button
             label="Submit"
