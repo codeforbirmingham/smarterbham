@@ -23,7 +23,7 @@ module.exports = {
     publicPath: '/',
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx', '.json', '.css'],
     modules: [
       sourcePath,
       'node_modules',
@@ -51,17 +51,37 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: [sourcePath],
-        exclude: /node_modules/,
         loader: 'babel-loader',
-        options: { presets: ['es2015', 'react', 'stage-0'] },
+        options: {
+          presets: [
+            ['es2015', { modules: false }],
+            'stage-0',
+            'react',
+          ],
+        },
       },
       {
         test: /\.json$/,
         loader: 'json-loader',
       },
-      {
+      { /*
+        * required for react-toolbox!
+        * https://github.com/react-toolbox/react-toolbox-example
+        */
         test: /\.css$/,
-        loader: 'css-loader',
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: '[name]--[local]--[hash:base64:8]',
+            },
+          },
+          'postcss-loader',
+        ],
       },
     ],
   },

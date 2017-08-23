@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // Components
-import Button from 'react-toolbox/lib/button/Button';
+import { Button } from 'react-toolbox/lib/button';
 import Input from 'react-toolbox/lib/input';
 
 const styles = {
@@ -27,7 +27,7 @@ class LoginView extends Component {
   render() {
     return (
       <div style={styles}>
-        <form>
+        <section>
           <Input
             type="text"
             value={this.state.username}
@@ -44,7 +44,7 @@ class LoginView extends Component {
             style={{ marginTop: '20px' }}
             onClick={this.onSubmit}
           />
-        </form>
+        </section>
       </div>
     );
   }
