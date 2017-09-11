@@ -3,6 +3,38 @@ birmingham city sensor, node implementation
 
 There are some good getting-started details over at http://docs.aws.amazon.com/iot/latest/developerguide/iot-device-sdk-node.html that you should read through before using this.
 
+# setup wifi and AP on the raspberry pi zero w
+
+There's some documentation here on how to setup wifi on the pi:
+
+http://imti.co/post/145442415333/raspberry-pi-3-wifi-station-ap
+
+Note that we are *not* going to bridge the connection between uap0 and wlan0, so
+you can use this 'hostapdstart' script instead of the one provided in the tutorial:
+
+```
+#!/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+iw dev wlan0 interface add uap0 type __ap
+service dnsmasq restart
+
+# comment out these lines to disallow users connected to the
+# access point from using the internet connection
+#sysctl net.ipv4.ip_forward=1
+#iptables -t nat -A POSTROUTING -s 192.168.50.0/24 ! -d 192.168.50.0/24 -j MASQUERADE
+
+ifup uap0
+hostapd /etc/hostapd/hostapd.conf
+```
+
+Also, you should comment on the following line from /etc/default/hostapd:
+
+```
+# commented out to disable hostapd from running on startup,
+# since we run this manually in hostapdstart
+# DAEMON_CONF="/etc/hostapd/hostapd.conf"
+```
+
 # installing node on the raspberry pi zero w
 
 First, you should install node. Make sure you do not have any version of node, nodejs or npm already on the raspberry pi. Follow the instructions here https://blog.miniarray.com/installing-node-js-on-a-raspberry-pi-zero-21a1522db2bb
