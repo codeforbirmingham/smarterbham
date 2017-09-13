@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -45,6 +46,7 @@ module.exports = {
       },
     }),
     new webpack.optimize.CommonsChunkPlugin({ names: ['app', 'vendor'] }),
+    new ExtractTextPlugin('[name].[contenthash].css'),
   ],
   module: {
     rules: [
@@ -78,10 +80,30 @@ module.exports = {
               sourceMap: true,
               importLoaders: 1,
               localIdentName: '[name]--[local]--[hash:base64:8]',
+              minimize: {
+                autoprefixer: {
+                  add: true,
+                  remove: true,
+                  browsers: ['last 2 versions'],
+                },
+                discardComments: {
+                  removeAll: true,
+                },
+                safe: true,
+                sourcemap: isProduction,
+              },
             },
           },
           'postcss-loader',
         ],
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader?name=fonts/[name].[ext]',
       },
     ],
   },
