@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -286,45 +286,44 @@
 <text x="-7.62" y="-7.62" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
 <symbol name="GP2Y1010AU0F">
-<pin name="P$1" x="0" y="10.16" length="middle" rot="R180"/>
-<pin name="P$2" x="0" y="5.08" length="middle" rot="R180"/>
-<pin name="P$3" x="0" y="0" length="middle" rot="R180"/>
-<pin name="P$4" x="0" y="-5.08" length="middle" rot="R180"/>
-<pin name="P$5" x="0" y="-10.16" length="middle" rot="R180"/>
-<pin name="P$6" x="0" y="-15.24" length="middle" rot="R180"/>
+<pin name="V-LED" x="-7.62" y="10.16" length="middle"/>
+<pin name="LED-GND" x="-7.62" y="5.08" length="middle"/>
+<pin name="LED" x="-7.62" y="0" length="middle"/>
+<pin name="S-GND" x="-7.62" y="-5.08" length="middle"/>
+<pin name="VO" x="-7.62" y="-10.16" length="middle"/>
+<pin name="VCC" x="-7.62" y="-15.24" length="middle"/>
 <wire x1="-2.54" y1="12.7" x2="-2.54" y2="-17.78" width="0.254" layer="94"/>
 <wire x1="-2.54" y1="-17.78" x2="10.16" y2="-17.78" width="0.254" layer="94"/>
 <wire x1="10.16" y1="-17.78" x2="10.16" y2="12.7" width="0.254" layer="94"/>
 <wire x1="10.16" y1="12.7" x2="-2.54" y2="12.7" width="0.254" layer="94"/>
 <text x="-2.54" y="15.24" size="1.778" layer="94">&gt;NAME</text>
-<text x="-2.54" y="-20.32" size="1.778" layer="94">&gt;VALUE</text>
 </symbol>
 <symbol name="MIC">
-<pin name="MIC_AOUT" x="0" y="5.08" length="middle" rot="R180"/>
-<pin name="GND" x="0" y="0" length="middle" rot="R180"/>
-<pin name="VCC" x="0" y="-5.08" length="middle" rot="R180"/>
+<pin name="AO" x="-7.62" y="5.08" length="middle"/>
+<pin name="GND" x="-7.62" y="0" length="middle"/>
+<pin name="VCC" x="-7.62" y="-5.08" length="middle"/>
 <wire x1="-2.54" y1="7.62" x2="5.08" y2="7.62" width="0.254" layer="94"/>
 <wire x1="5.08" y1="7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
 <wire x1="5.08" y1="-7.62" x2="-2.54" y2="-7.62" width="0.254" layer="94"/>
 <wire x1="-2.54" y1="-7.62" x2="-2.54" y2="7.62" width="0.254" layer="94"/>
 </symbol>
 <symbol name="DHT11">
-<pin name="VCC" x="0" y="5.08" length="middle" rot="R180"/>
-<pin name="DATA" x="0" y="0" length="middle" rot="R180"/>
-<pin name="GND" x="0" y="-10.16" length="middle" rot="R180"/>
+<pin name="VCC" x="-7.62" y="5.08" length="middle"/>
+<pin name="DATA" x="-7.62" y="0" length="middle"/>
+<pin name="GND" x="-7.62" y="-10.16" length="middle"/>
 <wire x1="-2.54" y1="7.62" x2="-2.54" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="-12.7" x2="5.08" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="5.08" y1="-12.7" x2="5.08" y2="7.62" width="0.254" layer="94"/>
-<wire x1="5.08" y1="7.62" x2="-2.54" y2="7.62" width="0.254" layer="94"/>
-<text x="-2.54" y="10.16" size="1.778" layer="94">DHT11</text>
+<wire x1="-2.54" y1="-12.7" x2="7.62" y2="-12.7" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-12.7" x2="7.62" y2="7.62" width="0.254" layer="94"/>
+<wire x1="7.62" y1="7.62" x2="-2.54" y2="7.62" width="0.254" layer="94"/>
+<text x="-2.54" y="10.16" size="1.778" layer="94">&gt;NAME</text>
 </symbol>
 <symbol name="I2CBUS">
-<pin name="VCC" x="0" y="5.08" length="middle" rot="R180"/>
-<pin name="D3" x="0" y="2.54" length="middle" rot="R180"/>
-<pin name="3V3" x="0" y="0" length="middle" rot="R180"/>
-<pin name="GND" x="0" y="-2.54" length="middle" rot="R180"/>
-<pin name="SDA" x="0" y="-5.08" length="middle" rot="R180"/>
-<pin name="SCL" x="0" y="-7.62" length="middle" rot="R180"/>
+<pin name="VCC" x="-7.62" y="5.08" length="middle"/>
+<pin name="D3" x="-7.62" y="2.54" length="middle"/>
+<pin name="3V3" x="-7.62" y="0" length="middle"/>
+<pin name="GND" x="-7.62" y="-2.54" length="middle"/>
+<pin name="SDA" x="-7.62" y="-5.08" length="middle"/>
+<pin name="SCL" x="-7.62" y="-7.62" length="middle"/>
 <wire x1="-2.54" y1="7.62" x2="-2.54" y2="-10.16" width="0.254" layer="94"/>
 <wire x1="-2.54" y1="-10.16" x2="7.62" y2="-10.16" width="0.254" layer="94"/>
 <wire x1="7.62" y1="-10.16" x2="7.62" y2="7.62" width="0.254" layer="94"/>
@@ -430,12 +429,12 @@
 <devices>
 <device name="" package="S6B-ZR-SM4A-TF">
 <connects>
-<connect gate="G$1" pin="P$1" pad="P$1"/>
-<connect gate="G$1" pin="P$2" pad="P$2"/>
-<connect gate="G$1" pin="P$3" pad="P$3"/>
-<connect gate="G$1" pin="P$4" pad="P$4"/>
-<connect gate="G$1" pin="P$5" pad="P$5"/>
-<connect gate="G$1" pin="P$6" pad="P$6"/>
+<connect gate="G$1" pin="LED" pad="P$3"/>
+<connect gate="G$1" pin="LED-GND" pad="P$2"/>
+<connect gate="G$1" pin="S-GND" pad="P$4"/>
+<connect gate="G$1" pin="V-LED" pad="P$1"/>
+<connect gate="G$1" pin="VCC" pad="P$6"/>
+<connect gate="G$1" pin="VO" pad="P$5"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -450,8 +449,8 @@
 <devices>
 <device name="" package="MOLEX_3">
 <connects>
+<connect gate="G$1" pin="AO" pad="P$1"/>
 <connect gate="G$1" pin="GND" pad="P$2"/>
-<connect gate="G$1" pin="MIC_AOUT" pad="P$1"/>
 <connect gate="G$1" pin="VCC" pad="P$3"/>
 </connects>
 <technologies>
