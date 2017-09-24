@@ -330,6 +330,15 @@
 <wire x1="7.62" y1="7.62" x2="-2.54" y2="7.62" width="0.254" layer="94"/>
 <text x="-2.54" y="10.16" size="1.778" layer="94">&gt;NAME</text>
 </symbol>
+<symbol name="BTN">
+<pin name="VCC" x="-5.08" y="2.54" length="middle"/>
+<pin name="OUT" x="-5.08" y="-2.54" length="middle"/>
+<wire x1="0" y1="5.08" x2="0" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="0" y1="-5.08" x2="7.62" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-5.08" x2="7.62" y2="5.08" width="0.254" layer="94"/>
+<wire x1="7.62" y1="5.08" x2="0" y2="5.08" width="0.254" layer="94"/>
+<text x="0" y="7.62" size="1.778" layer="94">&gt;NAME</text>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="PIZERO">
@@ -488,6 +497,22 @@
 <connect gate="G$1" pin="GND" pad="P$4"/>
 <connect gate="G$1" pin="SCL" pad="P$6"/>
 <connect gate="G$1" pin="SDA" pad="P$5"/>
+<connect gate="G$1" pin="VCC" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="BTN">
+<gates>
+<gate name="G$1" symbol="BTN" x="-2.54" y="0"/>
+</gates>
+<devices>
+<device name="" package="MOLEX_2">
+<connects>
+<connect gate="G$1" pin="OUT" pad="P$2"/>
 <connect gate="G$1" pin="VCC" pad="P$1"/>
 </connects>
 <technologies>

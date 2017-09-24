@@ -274,6 +274,19 @@
 <text x="-6.35" y="3.81" size="1.27" layer="21">&gt;NAME</text>
 <circle x="5.08" y="-2.54" radius="0.359209375" width="0.127" layer="21"/>
 </package>
+<package name="MOLEX_2">
+<pad name="P$2" x="-1.27" y="0" drill="1.016" diameter="2.032"/>
+<pad name="P$1" x="1.27" y="0" drill="1.016" diameter="2.032" shape="square"/>
+<wire x1="-3.5" y1="2.5" x2="-3.5" y2="-2.5" width="0.127" layer="51"/>
+<wire x1="-3.5" y1="-2.5" x2="3.5" y2="-2.5" width="0.127" layer="51"/>
+<wire x1="3.5" y1="-2.5" x2="3.5" y2="2.5" width="0.127" layer="51"/>
+<wire x1="3.5" y1="2.5" x2="2.54" y2="2.5" width="0.127" layer="51"/>
+<wire x1="2.54" y1="2.5" x2="2.54" y2="4" width="0.127" layer="51"/>
+<wire x1="2.54" y1="4" x2="-2.54" y2="4" width="0.127" layer="51"/>
+<wire x1="-2.54" y1="4" x2="-2.54" y2="2.5" width="0.127" layer="51"/>
+<wire x1="-2.54" y1="2.5" x2="-3.5" y2="2.5" width="0.127" layer="51"/>
+<text x="-3.81" y="5.08" size="1.27" layer="21">&gt;NAME</text>
+</package>
 </packages>
 <symbols>
 <symbol name="PIZERO">
@@ -401,6 +414,15 @@
 <wire x1="5.08" y1="7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
 <wire x1="5.08" y1="-7.62" x2="-2.54" y2="-7.62" width="0.254" layer="94"/>
 <wire x1="-2.54" y1="-7.62" x2="-2.54" y2="7.62" width="0.254" layer="94"/>
+</symbol>
+<symbol name="BTN">
+<pin name="VCC" x="-5.08" y="2.54" length="middle"/>
+<pin name="OUT" x="-5.08" y="-2.54" length="middle"/>
+<wire x1="0" y1="5.08" x2="0" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="0" y1="-5.08" x2="7.62" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-5.08" x2="7.62" y2="5.08" width="0.254" layer="94"/>
+<wire x1="7.62" y1="5.08" x2="0" y2="5.08" width="0.254" layer="94"/>
+<text x="0" y="7.62" size="1.778" layer="94">&gt;NAME</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -561,6 +583,22 @@
 <connect gate="G$1" pin="AO" pad="P$1"/>
 <connect gate="G$1" pin="GND" pad="P$2"/>
 <connect gate="G$1" pin="VCC" pad="P$3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="BTN">
+<gates>
+<gate name="G$1" symbol="BTN" x="-2.54" y="0"/>
+</gates>
+<devices>
+<device name="" package="MOLEX_2">
+<connects>
+<connect gate="G$1" pin="OUT" pad="P$2"/>
+<connect gate="G$1" pin="VCC" pad="P$1"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -14032,6 +14070,11 @@ diameter 5 mm, grid 2.54 mm</description>
 <part name="GND3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="BTN1" library="citysensor" deviceset="BTN" device=""/>
+<part name="BTN2" library="citysensor" deviceset="BTN" device=""/>
+<part name="R8" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-EU_" device="M0805" package3d_urn="urn:adsk.eagle:package:26079/1" value="10k"/>
+<part name="R9" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-EU_" device="M0805" package3d_urn="urn:adsk.eagle:package:26079/1" value="10k"/>
+<part name="GND6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -14068,6 +14111,11 @@ diameter 5 mm, grid 2.54 mm</description>
 <instance part="GND3" gate="1" x="5.08" y="38.1"/>
 <instance part="GND4" gate="1" x="228.6" y="50.8"/>
 <instance part="GND5" gate="1" x="119.38" y="12.7"/>
+<instance part="BTN1" gate="G$1" x="83.82" y="12.7"/>
+<instance part="BTN2" gate="G$1" x="83.82" y="-7.62"/>
+<instance part="R8" gate="G$1" x="66.04" y="10.16" rot="R180"/>
+<instance part="R9" gate="G$1" x="66.04" y="-10.16" rot="R180"/>
+<instance part="GND6" gate="1" x="55.88" y="-17.78"/>
 </instances>
 <busses>
 </busses>
@@ -14192,6 +14240,16 @@ diameter 5 mm, grid 2.54 mm</description>
 <pinref part="U1" gate="U$1" pin="GND@5"/>
 <wire x1="127" y1="15.24" x2="119.38" y2="15.24" width="0.1524" layer="91"/>
 <junction x="119.38" y="15.24"/>
+</segment>
+<segment>
+<pinref part="R8" gate="G$1" pin="2"/>
+<pinref part="GND6" gate="1" pin="GND"/>
+<wire x1="60.96" y1="10.16" x2="55.88" y2="10.16" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="10.16" x2="55.88" y2="-10.16" width="0.1524" layer="91"/>
+<pinref part="R9" gate="G$1" pin="2"/>
+<wire x1="55.88" y1="-10.16" x2="55.88" y2="-15.24" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="-10.16" x2="55.88" y2="-10.16" width="0.1524" layer="91"/>
+<junction x="55.88" y="-10.16"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -14323,6 +14381,16 @@ diameter 5 mm, grid 2.54 mm</description>
 <pinref part="U1" gate="U$1" pin="AVCC"/>
 <wire x1="121.92" y1="66.04" x2="127" y2="66.04" width="0.1524" layer="91"/>
 <label x="121.92" y="66.04" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="BTN1" gate="G$1" pin="VCC"/>
+<wire x1="78.74" y1="15.24" x2="73.66" y2="15.24" width="0.1524" layer="91"/>
+<label x="71.12" y="15.24" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="BTN2" gate="G$1" pin="VCC"/>
+<wire x1="78.74" y1="-5.08" x2="73.66" y2="-5.08" width="0.1524" layer="91"/>
+<label x="71.12" y="-5.08" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="MISO" class="0">
@@ -14475,6 +14543,32 @@ diameter 5 mm, grid 2.54 mm</description>
 <pinref part="U1" gate="U$1" pin="PC0(ADC0)"/>
 <wire x1="175.26" y1="71.12" x2="180.34" y2="71.12" width="0.1524" layer="91"/>
 <label x="180.34" y="71.12" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="BTN1OUT" class="0">
+<segment>
+<pinref part="R8" gate="G$1" pin="1"/>
+<pinref part="BTN1" gate="G$1" pin="OUT"/>
+<wire x1="71.12" y1="10.16" x2="78.74" y2="10.16" width="0.1524" layer="91"/>
+<label x="71.374" y="7.366" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="GPIO13"/>
+<wire x1="15.24" y1="30.48" x2="7.62" y2="30.48" width="0.1524" layer="91"/>
+<label x="7.62" y="30.48" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="BTN2OUT" class="0">
+<segment>
+<pinref part="BTN2" gate="G$1" pin="OUT"/>
+<pinref part="R9" gate="G$1" pin="1"/>
+<wire x1="78.74" y1="-10.16" x2="71.12" y2="-10.16" width="0.1524" layer="91"/>
+<label x="71.374" y="-12.954" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="GPIO06"/>
+<wire x1="15.24" y1="33.02" x2="7.62" y2="33.02" width="0.1524" layer="91"/>
+<label x="7.62" y="33.02" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
