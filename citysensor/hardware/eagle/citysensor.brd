@@ -147,6 +147,8 @@
 <wire x1="65.71" y1="30.47" x2="0" y2="30.47" width="0" layer="20"/>
 <wire x1="0" y1="30.47" x2="0" y2="-1.27" width="0" layer="20"/>
 <text x="12.954" y="0.381" size="1.27" layer="51">X1</text>
+<text x="2.032" y="14.224" size="1.016" layer="25" rot="R90">bham city sensor</text>
+<text x="3.683" y="14.224" size="1.016" layer="25" rot="R90">rev 1.1</text>
 </plain>
 <libraries>
 <library name="resistor" urn="urn:adsk.eagle:library:348">
@@ -1818,10 +1820,10 @@ design rules under a new name.</description>
 <attribute name="NAME" x="54.61" y="10.16" size="1.27" layer="25" rot="R180"/>
 </element>
 <element name="BTN1" library="citysensor" package="MOLEX_2" value="BTN" x="61.595" y="16.383" smashed="yes" rot="R270">
-<attribute name="NAME" x="65.913" y="18.034" size="1.27" layer="21" rot="R270"/>
+<attribute name="NAME" x="63.373" y="18.034" size="1.27" layer="21" rot="R270"/>
 </element>
 <element name="BTN2" library="citysensor" package="MOLEX_2" value="BTN" x="61.595" y="9.271" smashed="yes" rot="R270">
-<attribute name="NAME" x="65.786" y="13.208" size="1.27" layer="21" rot="R270"/>
+<attribute name="NAME" x="63.246" y="10.668" size="1.27" layer="21" rot="R270"/>
 </element>
 <element name="R8" library="resistor" library_urn="urn:adsk.eagle:library:348" package="M0805" package3d_urn="urn:adsk.eagle:package:26079/1" value="10k" x="61.976" y="21.336" smashed="yes">
 <attribute name="NAME" x="65.278" y="20.193" size="1.27" layer="25" rot="R90"/>
