@@ -1,16 +1,19 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Route,
+  Switch,
 } from 'react-router-dom';
-
 // Routes
 import Login from './Login';
+import '../styles/main.scss';
 
 const Main = () => (
-  <Router>
-    <Route exact path="/" component={Login} />
-  </Router>
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={Login} />
+    </Switch>
+  </BrowserRouter>
 );
 
 export default Main;

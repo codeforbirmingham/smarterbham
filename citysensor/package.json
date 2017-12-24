@@ -4,9 +4,12 @@
   "description": "birmingham city sensor project",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --colors",
+    "start:dev": "export NODE_ENV=development && nodemon server/server.js",
+    "build:dev": "webpack -d",
+    "build:prod": "npm run clean && webpack --define process.env.NODE_ENV=\"'production'\" --progress",
+    "start:web": "webpack-dev-server --hot --inline --define process.env.NODE_ENV=\"'development'\" --progress --colors",
     "device": "node server/index.js -f certs/ -F aws_config.js",
-    "lint": "eslint src server --ext=js --ext=jsx"
+    "lint": "eslint web server --ext=js --ext=jsx"
   },
   "repository": {
     "type": "git",
@@ -18,18 +21,21 @@
     "url": "https://github.com/codeforbirmingham/smarterbham/issues"
   },
   "dependencies": {
-    "aws-iot-device-sdk": "2.0.1",
-    "react": "15.6.1",
-    "react-dom": "15.6.1",
-    "react-router-dom": "4.1.2",
-    "react-toolbox": "2.0.0-beta.12"
+    "aws-iot-device-sdk": "2.2.0",
+    "express": "4.16.2",
+    "material-ui": "1.0.0-beta.25",
+    "react": "16.2.0",
+    "react-dom": "16.2.0",
+    "react-router-dom": "4.2.2"
   },
   "devDependencies": {
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
-    "babel-preset-es2015": "6.24.1",
+    "babel-plugin-transform-async-to-generator": "6.24.1",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-preset-env": "1.6.1",
     "babel-preset-react": "6.24.1",
-    "babel-preset-stage-0": "6.24.1",
+    "css-hot-loader": "1.3.5",
     "css-loader": "0.28.5",
     "eslint": "4.5.0",
     "eslint-config-airbnb": "15.1.0",
@@ -37,18 +43,17 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
     "extract-text-webpack-plugin": "3.0.0",
-    "file-loader": "0.11.2",
+    "file-loader": "1.1.6",
+    "html-loader": "0.5.1",
     "html-webpack-plugin": "2.30.1",
     "json-loader": "0.5.7",
-    "node-sass": "4.5.3",
-    "postcss-cssnext": "^2.9.0",
-    "postcss-each": "^0.9.3",
-    "postcss-import": "^9.1.0",
-    "postcss-loader": "^1.2.2",
-    "postcss-mixins": "^5.4.1",
+    "node-sass": "4.7.2",
+    "nodemon": "1.14.3",
     "sass-loader": "6.0.6",
-    "style-loader": "0.18.2",
-    "webpack": "3.5.5",
-    "webpack-dev-server": "2.7.1"
+    "style-loader": "0.19.1",
+    "uglifyjs-webpack-plugin": "1.1.4",
+    "webpack": "3.10.0",
+    "webpack-dev-server": "2.9.7",
+    "webpack-node-externals": "1.6.0"
   }
 }

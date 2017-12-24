@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // Components
-import Button from 'react-toolbox/lib/button';
-import Input from 'react-toolbox/lib/input';
+import Button from 'material-ui/Button';
+import Input from 'material-ui/TextField';
 
 class LoginView extends Component {
   constructor() {
@@ -24,22 +24,22 @@ class LoginView extends Component {
           <h1>Smarter Bham Project</h1>
           <Input
             type="text"
-            label="username"
+            placeholder="username"
             value={this.state.username}
-            onChange={val => this.setState({ username: val })}
+            onChange={event => this.setState({ username: event.target.value })}
           />
           <Input
             type="password"
-            label="password"
+            placeholder="password"
             value={this.state.password}
-            onChange={val => this.setState({ password: val })}
+            onChange={event => this.setState({ password: event.target.value })}
           />
           <Button
-            label="Submit"
-            primary
             raised
             onClick={this.onSubmit}
-          />
+          >
+            Submit
+          </Button>
         </section>
       </div>
     );
