@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "export NODE_ENV=development && nodemon server/server.js",
-    "build:dev": "webpack -d",
+    "build:dev": "npm run clean && webpack -d",
     "build:prod": "npm run clean && webpack --define process.env.NODE_ENV=\"'production'\" --progress",
     "start:web": "webpack-dev-server --hot --inline --define process.env.NODE_ENV=\"'development'\" --progress --colors",
     "device": "node server/index.js -f certs/ -F aws_config.js",
-    "lint": "eslint web server --ext=js --ext=jsx"
+    "lint": "eslint web server --ext=js --ext=jsx",
+    "clean": "rm -rf ./dist"
   },
   "repository": {
     "type": "git",
@@ -37,8 +38,6 @@
     "babel-preset-env": "1.6.1",
     "babel-preset-react": "6.24.1",
     "copy-webpack-plugin": "4.3.1",
-    "css-hot-loader": "1.3.5",
-    "css-loader": "0.28.5",
     "eslint": "4.5.0",
     "eslint-config-airbnb": "15.1.0",
     "eslint-plugin-import": "^2.7.0",
@@ -47,10 +46,7 @@
     "html-loader": "0.5.1",
     "html-webpack-plugin": "2.30.1",
     "json-loader": "0.5.7",
-    "node-sass": "4.7.2",
     "nodemon": "1.14.3",
-    "sass-loader": "6.0.6",
-    "style-loader": "0.19.1",
     "uglifyjs-webpack-plugin": "1.1.4",
     "webpack": "3.10.0",
     "webpack-dev-server": "2.9.7",
