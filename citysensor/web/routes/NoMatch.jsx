@@ -45,7 +45,7 @@ const NoMatchView = ({ classes }) => (
 );
 
 NoMatchView.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default withStyles(styles)(NoMatchView);
