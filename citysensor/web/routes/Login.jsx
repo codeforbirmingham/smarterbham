@@ -1,7 +1,27 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Grid from 'material-ui/Grid';
+import { withStyles } from 'material-ui/styles';
 // Components
 import Button from 'material-ui/Button';
 import Input from 'material-ui/TextField';
+
+const styles = () => ({
+  root: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
+  item: {
+    textAlign: 'center',
+  },
+  input: {
+    marginBottom: '20px',
+  },
+  button: {
+    width: '100%',
+  },
+});
 
 class LoginView extends Component {
   constructor() {
@@ -18,32 +38,43 @@ class LoginView extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div id="login">
-        <section>
+      <Grid container className={classes.root}>
+        <Grid item className={classes.item}>
           <h1>Smarter Bham Project</h1>
           <Input
+            fullWidth
             type="text"
             placeholder="username"
+            className={classes.input}
             value={this.state.username}
             onChange={event => this.setState({ username: event.target.value })}
           />
           <Input
+            fullWidth
             type="password"
             placeholder="password"
+            className={classes.input}
             value={this.state.password}
             onChange={event => this.setState({ password: event.target.value })}
           />
           <Button
             raised
+            color="primary"
+            className={classes.button}
             onClick={this.onSubmit}
           >
             Submit
           </Button>
-        </section>
-      </div>
+        </Grid>
+      </Grid>
     );
   }
 }
 
-export default LoginView;
+LoginView.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
+};
+
+export default withStyles(styles)(LoginView);

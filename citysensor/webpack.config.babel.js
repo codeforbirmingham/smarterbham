@@ -1,4 +1,4 @@
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import nodeExternals from 'webpack-node-externals';
 import path from 'path';
@@ -10,7 +10,6 @@ const buildPath = path.resolve(__dirname, 'dist');
 const clientPath = path.resolve(__dirname, 'web');
 const publicPath = path.resolve(__dirname, 'public');
 const serverPath = path.resolve(__dirname, 'server');
-const extractSCSS = new ExtractTextPlugin('[name].[contenthash].css');
 
 const client = {
   context: __dirname,
@@ -29,7 +28,7 @@ const client = {
     publicPath: '/',
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.css'],
+    extensions: ['.js', '.jsx', '.json'],
     modules: [
       clientPath,
       'node_modules',
@@ -42,7 +41,6 @@ const client = {
     historyApiFallback: true,
   },
   plugins: [
-    extractSCSS,
     new HtmlWebpackPlugin(
       {
         inject: true,
@@ -55,6 +53,13 @@ const client = {
         NODE_URL: isProduction
           ? JSON.stringify('https://?')
           : JSON.stringify('http://localhost:8000'),
+      },
+    }),
+    new CopyWebpackPlugin([{ from: `${publicPath}`, to: `${buildPath}` }]),
+    new UglifyJSPlugin({
+      uglifyOptions: {
+        compress: isProduction,
+        mangle: isProduction,
       },
     }),
   ],
@@ -83,40 +88,6 @@ const client = {
       {
         test: /\.html$/,
         loader: 'html-loader',
-      },
-      {
-        test: /\.(scss)$/,
-        use: ['css-hot-loader'].concat(extractSCSS.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: { alias: { '../img': `${publicPath}/img` } },
-            },
-            {
-              loader: 'sass-loader',
-            },
-          ],
-        })),
-      },
-      {
-        test: /\.(png|jpg|jpeg|gif|ico)$/,
-        use: [
-          {
-            // loader: 'url-loader'
-            loader: 'file-loader',
-            options: {
-              name: './img/[name].[hash].[ext]',
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file-loader',
-        options: {
-          name: './fonts/[name].[hash].[ext]',
-        },
       },
     ],
   },
