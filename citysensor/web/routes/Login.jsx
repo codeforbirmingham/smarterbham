@@ -16,9 +16,10 @@ const styles = () => ({
     textAlign: 'center',
   },
   input: {
-    marginBottom: '20px',
+    marginBottom: '10px',
   },
   button: {
+    marginTop: '10px',
     width: '100%',
   },
 });
@@ -46,7 +47,7 @@ class LoginView extends Component {
           <Input
             fullWidth
             type="text"
-            placeholder="username"
+            label="username"
             className={classes.input}
             value={this.state.username}
             onChange={event => this.setState({ username: event.target.value })}
@@ -54,7 +55,7 @@ class LoginView extends Component {
           <Input
             fullWidth
             type="password"
-            placeholder="password"
+            label="password"
             className={classes.input}
             value={this.state.password}
             onChange={event => this.setState({ password: event.target.value })}
