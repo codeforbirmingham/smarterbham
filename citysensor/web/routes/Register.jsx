@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
-// Components
 import Button from 'material-ui/Button';
 import Input from 'material-ui/TextField';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
+import deviceApi from '../services/deviceApi';
 
 const styles = () => ({
   root: {
@@ -31,14 +32,40 @@ class Register extends Component {
   constructor() {
     super();
     this.state = {
-      ssid: '',
+      macAddress: '',
       password: '',
+      networks: [],
     };
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentWillMount() {
+    deviceApi.get('/networks')
+      .then(res => this.setState({ networks: res.data }))
+      .catch(err => console.error(err));
+  }
+
   onSubmit() {
-    console.log(this.state);
+    const {
+      networks,
+      macAddress,
+      password,
+    } = this.state;
+    const network = _.find(networks, { mac: macAddress });
+    console.log('Selected network', network, password);
+  }
+
+  handleNetworkSelect(macAddress) {
+    const network = _.find(this.state.networks, { mac: macAddress });
+    // TODO: based on network security, may have to change password type field!
+    console.log(network.security);
+    this.setState({ macAddress });
+  }
+
+  renderSelectOptions() {
+    return this.state.networks.map(network => (
+      <MenuItem key={network.mac} value={network.mac}>{network.ssid}</MenuItem>
+    ));
   }
 
   render() {
@@ -51,13 +78,13 @@ class Register extends Component {
             fullWidth
             displayEmpty
             className={classes.input}
-            value={this.state.ssid}
-            onChange={event => this.setState({ ssid: event.target.value })}
+            value={this.state.macAddress}
+            onChange={event => this.handleNetworkSelect(event.target.value)}
           >
             <MenuItem value="">
               <em>Select WiFi Network</em>
             </MenuItem>
-            <MenuItem value={'foo'}>Foo</MenuItem>
+            {this.renderSelectOptions()}
           </Select>
           <Input
             fullWidth
