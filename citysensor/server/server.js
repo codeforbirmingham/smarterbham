@@ -12,6 +12,7 @@ const env = process.env.NODE_ENV;
 // configurable path directory
 const dirPath = env === 'production' ? __dirname : `${__dirname}/../dist`;
 
+// https://www.npmjs.com/package/wifi-control
 WiFiControl.init({
   debug: env !== 'production',
 });
