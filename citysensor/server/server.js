@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
+import fs from 'fs';
 import path from 'path';
 import { Server } from 'http';
 import Express from 'express';
+import bodyParser from 'body-parser';
 import WiFiControl from 'wifi-control';
 
 const app = new Express();
@@ -19,6 +21,7 @@ WiFiControl.init({
 
 // define the folder that will be used for static assets
 app.use(Express.static(path.resolve(dirPath)));
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -31,14 +34,31 @@ app.use((req, res, next) => {
   next();
 });
 
-// Internal API Routes
+/**
+* Internal API Routes
+*/
 app.get('/networks', (req, res) => {
-  WiFiControl.scanForWiFi((err, response) => {
+  WiFiControl.scanForWiFi((err, wifiRes) => {
     if (err) {
       return res.status(500).send(err);
     }
-    const wifiNetworks = response.networks.map(network => network);
+    const wifiNetworks = wifiRes.networks.map(network => network);
     return res.send(wifiNetworks);
+  });
+});
+
+app.post('/networks', (req, res) => {
+  const ap = {
+    ssid: req.body.ssid,
+    password: req.body.password,
+  };
+  WiFiControl.connectToAP(ap, (err, wifiRes) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    // create json file for storing network info
+    fs.writeFileSync(`${dirPath}/ap.json`, JSON.stringify(ap));
+    return res.status(200).send(wifiRes);
   });
 });
 

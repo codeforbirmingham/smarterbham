@@ -52,7 +52,14 @@ class Register extends Component {
       password,
     } = this.state;
     const network = _.find(networks, { mac: macAddress });
-    console.log('Selected network', network, password);
+
+    if (_.isEmpty(network.ssid) || _.isEmpty(password))
+      // TODO: error message
+      return;
+
+    deviceApi.post('/networks', { ssid: network.ssid, password })
+      .then(res => console.log(res.data))
+      .catch(err => console.error(err));
   }
 
   handleNetworkSelect(macAddress) {

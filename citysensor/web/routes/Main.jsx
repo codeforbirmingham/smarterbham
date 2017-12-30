@@ -8,12 +8,13 @@ import {
 import ProtectedRoute from '../components/ProtectedRoute';
 import Register from './Register';
 import Login from './Login';
+import DeviceView from './DeviceView';
 import NoMatch from './NoMatch';
 
 const Main = () => (
   <Switch>
     <Route exact path="/register" component={Register} />
-    <ProtectedRoute exact path="/login" component={Login} isRegistered={false} />
+    <ProtectedRoute exact path="/" component={DeviceView} isRegistered={false} />
     <Route component={NoMatch} />
   </Switch>
 );
