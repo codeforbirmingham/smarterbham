@@ -64,14 +64,11 @@ class Register extends React.Component {
     }
 
     deviceApi.post('/networks', { ssid: network.ssid, password })
-      .then(res => console.log(res.data))
+      .then(() => this.props.history.replace('/'))
       .catch(err => console.error(err));
   }
 
   handleNetworkSelect(macAddress) {
-    const network = _.find(this.state.networks, { mac: macAddress });
-    // TODO: based on network security, may have to change password type field!
-    console.log(network.security);
     this.setState({ macAddress });
   }
 
