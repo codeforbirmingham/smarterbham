@@ -36,12 +36,13 @@ class Register extends React.Component {
       macAddress: '',
       password: '',
       networks: [],
+      isRegistering: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   async componentWillMount() {
-    if (await deviceStatus.isConnected()) {
+    if (await deviceStatus.isRegistered()) {
       this.props.history.replace('/');
     } else {
       deviceApi.get('/networks')
@@ -63,9 +64,16 @@ class Register extends React.Component {
       return;
     }
 
+    this.setState({ isRegistering: true });
     deviceApi.post('/networks', { ssid: network.ssid, password })
-      .then(() => this.props.history.replace('/'))
-      .catch(err => console.error(err));
+      .then(() => {
+        this.setState({ isRegistering: false });
+        this.props.history.replace('/');
+      })
+      .catch((err) => {
+        this.setState({ isRegistering: false });
+        console.error(err);
+      });
   }
 
   handleNetworkSelect(macAddress) {
@@ -90,6 +98,7 @@ class Register extends React.Component {
             className={classes.input}
             value={this.state.macAddress}
             onChange={event => this.handleNetworkSelect(event.target.value)}
+            disabled={this.state.isRegistering}
           >
             <MenuItem value="">
               <em>Select WiFi Network</em>
@@ -103,14 +112,16 @@ class Register extends React.Component {
             className={classes.input}
             value={this.state.password}
             onChange={event => this.setState({ password: event.target.value })}
+            disabled={this.state.isRegistering}
           />
           <Button
             raised
             color="primary"
             className={classes.button}
             onClick={this.onSubmit}
+            disabled={this.state.isRegistering}
           >
-            Register Device
+            {this.state.isRegistering ? 'Connecting to WiFi...' : 'Register Device'}
           </Button>
         </Grid>
       </Grid>

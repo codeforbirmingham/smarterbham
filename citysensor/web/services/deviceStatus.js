@@ -1,5 +1,8 @@
 import deviceApi from './deviceApi';
 
 export default {
-  isConnected: () => deviceApi.get('/isConnected').then(res => res.data),
+  getConfig: () =>
+    deviceApi.get('/currentConfig').then(res => res.data).catch(err => err),
+  isRegistered: () =>
+    deviceApi.get('/currentConfig').then(() => true).catch(() => false),
 };

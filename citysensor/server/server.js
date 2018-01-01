@@ -37,9 +37,14 @@ app.use((req, res, next) => {
 /**
 * Device API Routes
 */
-app.get('/isConnected', (req, res) => {
-  const didSaveAP = fs.existsSync(`${__dirname}/ap.json`);
-  res.send(didSaveAP);
+app.get('/currentConfig', (req, res) => {
+  fs.readFile(`${__dirname}/ap.json`, { encoding: 'utf-8' }, (err, data) => {
+    if (err) {
+      res.status(404).send('Config not found');
+    } else {
+      res.send(data);
+    }
+  });
 });
 
 app.get('/networks', (req, res) => {
