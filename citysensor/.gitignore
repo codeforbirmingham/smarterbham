@@ -2,5 +2,7 @@ aws_config.js
 certs/
 node_modules/
 dist/
+**/*.log
+**/ap.json
 
 *.DS_Store

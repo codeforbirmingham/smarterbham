@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 import fs from 'fs';
 import path from 'path';
 import { Server } from 'http';
 import Express from 'express';
 import bodyParser from 'body-parser';
 import WiFiControl from 'wifi-control';
+import Logger from './lib/logger';
 
 const app = new Express();
 const server = new Server(app);
@@ -40,6 +40,7 @@ app.use((req, res, next) => {
 app.get('/networks', (req, res) => {
   WiFiControl.scanForWiFi((err, wifiRes) => {
     if (err) {
+      Logger.warn(err);
       return res.status(500).send(err);
     }
     const wifiNetworks = wifiRes.networks.map(network => network);
@@ -54,17 +55,19 @@ app.post('/networks', (req, res) => {
   };
   WiFiControl.connectToAP(ap, (err, wifiRes) => {
     if (err) {
+      Logger.warn(err);
       return res.status(500).send(err);
     }
     // create json file for storing network info
-    fs.writeFileSync(`${dirPath}/ap.json`, JSON.stringify(ap));
+    Logger.info(`Saved config for access point: ${req.body.ssid}`);
+    fs.writeFileSync('ap.json', JSON.stringify(ap));
     return res.status(200).send(wifiRes);
   });
 });
 
 // Error handling middleware, must be defined after all app.use() calls
 app.use((err, req, res, next) => {
-  console.log(`Error Middleware: ${err.message}`);
+  Logger.error(err);
   res.status(err.status || 500).end();
 });
 
@@ -75,8 +78,6 @@ app.get('*', (req, res) => {
 
 server.listen(port, (err) => {
   if (err) {
-    return console.error(err);
+    Logger.error(err);
   }
-  return console.info(
-    `Server running on http://localhost:${port} [${env}]`);
 });
