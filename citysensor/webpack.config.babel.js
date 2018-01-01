@@ -129,6 +129,11 @@ const server = {
         mangle: isProduction,
       },
     }),
+    new CopyWebpackPlugin([{
+      from: `${serverPath}/log/`,
+      to: `${buildPath}/log/`,
+      ignore: ['**/*.log'],
+    }]),
   ],
   externals: [nodeExternals()], // ignores including node_modules
 };
