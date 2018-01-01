@@ -59,7 +59,7 @@ app.post('/networks', (req, res) => {
       return res.status(500).send(err);
     }
     // create json file for storing network info
-    Logger.info(`Saved config for access point: ${req.body.ssid}`);
+    Logger.info(`Saved access point: ${req.body.ssid}`);
     fs.writeFileSync('ap.json', JSON.stringify(ap));
     return res.status(200).send(wifiRes);
   });
