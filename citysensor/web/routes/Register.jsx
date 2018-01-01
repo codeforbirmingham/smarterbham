@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
@@ -8,6 +8,7 @@ import Input from 'material-ui/TextField';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import deviceApi from '../services/deviceApi';
+import deviceStatus from '../services/deviceStatus';
 
 const styles = () => ({
   root: {
@@ -28,7 +29,7 @@ const styles = () => ({
   },
 });
 
-class Register extends Component {
+class Register extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -39,10 +40,14 @@ class Register extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillMount() {
-    deviceApi.get('/networks')
-      .then(res => this.setState({ networks: res.data }))
-      .catch(err => console.error(err));
+  async componentWillMount() {
+    if (await deviceStatus.isConnected()) {
+      this.props.history.replace('/');
+    } else {
+      deviceApi.get('/networks')
+        .then(res => this.setState({ networks: res.data }))
+        .catch(err => console.error(err));
+    }
   }
 
   onSubmit() {
@@ -53,9 +58,10 @@ class Register extends Component {
     } = this.state;
     const network = _.find(networks, { mac: macAddress });
 
-    if (_.isEmpty(network.ssid) || _.isEmpty(password))
+    if (_.isEmpty(network.ssid) || _.isEmpty(password)) {
       // TODO: error message
       return;
+    }
 
     deviceApi.post('/networks', { ssid: network.ssid, password })
       .then(res => console.log(res.data))
@@ -117,6 +123,7 @@ class Register extends Component {
 
 Register.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Register);

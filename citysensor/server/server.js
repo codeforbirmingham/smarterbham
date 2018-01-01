@@ -35,8 +35,13 @@ app.use((req, res, next) => {
 });
 
 /**
-* Internal API Routes
+* Device API Routes
 */
+app.get('/isConnected', (req, res) => {
+  const didSaveAP = fs.existsSync(`${__dirname}/ap.json`);
+  res.send(didSaveAP);
+});
+
 app.get('/networks', (req, res) => {
   WiFiControl.scanForWiFi((err, wifiRes) => {
     if (err) {
@@ -53,6 +58,7 @@ app.post('/networks', (req, res) => {
     ssid: req.body.ssid,
     password: req.body.password,
   };
+
   WiFiControl.connectToAP(ap, (err, wifiRes) => {
     if (err) {
       Logger.warn(err);
