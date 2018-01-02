@@ -5,7 +5,7 @@ import { Server } from 'http';
 import Express from 'express';
 import bodyParser from 'body-parser';
 import WiFiControl from 'wifi-control';
-import Logger from './lib/logger';
+import Logger from './utilities/logger';
 
 const app = new Express();
 const server = new Server(app);

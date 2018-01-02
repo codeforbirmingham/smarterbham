@@ -17,7 +17,9 @@ const styles = () => ({
 
 class DeviceView extends React.Component {
   async componentWillMount() {
-    if (!await deviceStatus.isRegistered()) {
+    if (await deviceStatus.isRegistered()) {
+      // TODO: socket here for sensor stats
+    } else {
       this.props.history.replace('/register');
     }
   }
