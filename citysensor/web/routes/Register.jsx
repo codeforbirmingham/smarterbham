@@ -36,7 +36,9 @@ class Register extends React.Component {
       macAddress: '',
       password: '',
       networks: [],
+      showPasswordField: false,
       isRegistering: false,
+      error: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -57,33 +59,58 @@ class Register extends React.Component {
       macAddress,
       password,
     } = this.state;
-    const network = _.find(networks, { mac: macAddress });
+    const network = _.find(networks, { mac: macAddress }) || {};
 
-    if (_.isEmpty(network.ssid) || _.isEmpty(password)) {
-      // TODO: error message
-      return;
+    if (this.isValid()) {
+      this.setState({ isRegistering: true, error: false });
+      deviceApi.post('/networks', { ssid: network.ssid, password })
+        .then(() => {
+          this.setState({ isRegistering: false });
+          this.props.history.replace('/');
+        })
+        .catch((err) => {
+          this.setState({ isRegistering: false, error: true });
+          console.error(err);
+        });
+    }
+  }
+
+  isValid() {
+    const {
+      networks,
+      macAddress,
+      password,
+    } = this.state;
+    const network = _.find(networks, { mac: macAddress }) || {};
+    let isValid;
+
+    if (_.isEmpty(network.ssid)) {
+      isValid = false;
+    } else if (network.security !== 'NONE' && _.isEmpty(password)) {
+      isValid = false;
+    } else {
+      isValid = true;
     }
 
-    this.setState({ isRegistering: true });
-    deviceApi.post('/networks', { ssid: network.ssid, password })
-      .then(() => {
-        this.setState({ isRegistering: false });
-        this.props.history.replace('/');
-      })
-      .catch((err) => {
-        this.setState({ isRegistering: false });
-        console.error(err);
-      });
+    this.setState({ error: !isValid });
+    return isValid;
   }
 
   handleNetworkSelect(macAddress) {
-    this.setState({ macAddress });
+    const network = _.find(this.state.networks, { mac: macAddress });
+    const showPasswordField = !_.isEmpty(macAddress) && network.security !== 'NONE';
+    this.setState({ macAddress, showPasswordField });
   }
 
   renderSelectOptions() {
-    return this.state.networks.map(network => (
-      <MenuItem key={network.mac} value={network.mac}>{network.ssid}</MenuItem>
-    ));
+    return this.state.networks.map((network) => {
+      const isSecure = network.security !== 'NONE';
+      return (
+        <MenuItem key={network.mac} value={network.mac}>
+          {network.ssid} &nbsp;{isSecure && <i className="fa fa-lock" />}
+        </MenuItem>
+      );
+    });
   }
 
   render() {
@@ -98,14 +125,17 @@ class Register extends React.Component {
             className={classes.input}
             value={this.state.macAddress}
             onChange={event => this.handleNetworkSelect(event.target.value)}
-            disabled={this.state.isRegistering}
+            disabled={this.state.isRegistering || _.isEmpty(this.state.networks)}
           >
             <MenuItem value="">
-              <em>Select WiFi Network</em>
+              {_.isEmpty(this.state.networks)
+                ? <em>Scanning Networks...</em>
+                : <em>Select Network</em>
+              }
             </MenuItem>
             {this.renderSelectOptions()}
           </Select>
-          <Input
+          { this.state.showPasswordField && <Input
             fullWidth
             type="password"
             label="WiFi Password"
@@ -113,13 +143,15 @@ class Register extends React.Component {
             value={this.state.password}
             onChange={event => this.setState({ password: event.target.value })}
             disabled={this.state.isRegistering}
+            error={this.state.error}
           />
+          }
           <Button
             raised
             color="primary"
             className={classes.button}
             onClick={this.onSubmit}
-            disabled={this.state.isRegistering}
+            disabled={this.state.isRegistering || _.isEmpty(this.state.macAddress)}
           >
             {this.state.isRegistering ? 'Connecting to WiFi...' : 'Register Device'}
           </Button>

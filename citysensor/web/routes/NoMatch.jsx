@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
+import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 
 const styles = () => ({
@@ -13,17 +14,19 @@ const styles = () => ({
     textAlign: 'center',
   },
   image: {
-    width: '150px',
-  },
-  text: {
-    marginTop: '10px',
+    width: '120px',
+    marginBottom: '5px',
   },
   link: {
     display: 'block',
     marginTop: '10px',
+    textDecoration: 'none',
   },
   icon: {
     marginRight: '5px',
+  },
+  span: {
+    borderBottom: '1px dotted black',
   },
 });
 
@@ -35,10 +38,9 @@ const NoMatchView = ({ classes }) => (
         alt="Page Not Found"
         className={classes.image}
       />
-      <h1>Uh Oh!</h1>
-      <div className={classes.text}>
-        Nothing exists at {window.location.href}
-      </div>
+      <Typography type="subheading">
+        Nothing exists at <span className={classes.span}>{window.location.href}</span>
+      </Typography>
       <a href="/" className={classes.link}><i className={`fa fa-hand-o-left ${classes.icon}`} /> Return home</a>
     </Grid>
   </Grid>
