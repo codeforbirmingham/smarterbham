@@ -53,7 +53,6 @@ tar xzvf ~/node-v4.2.4-linux-armv6l.tar.gz --strip=1
 ```
 git clone https://github.com/codeforbirmingham/smarterbham
 cd smarterbham/citysensor
-npm i
 ```
 
 # configuration
@@ -83,9 +82,11 @@ You will also need to modify aws_config.js to include information about your thi
 } 
 ```
 
-# running
+# running within this repo
 
 ```
+npm i
+npm run build
 npm start
 ```
 

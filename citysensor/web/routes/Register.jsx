@@ -47,9 +47,7 @@ class Register extends React.Component {
     if (await deviceStatus.isRegistered()) {
       this.props.history.replace('/');
     } else {
-      deviceApi.get('/networks')
-        .then(res => this.setState({ networks: res.data }))
-        .catch(err => console.error(err));
+      deviceApi.get('/networks').then(res => this.setState({ networks: res.data }));
     }
   }
 
@@ -68,9 +66,8 @@ class Register extends React.Component {
           this.setState({ isRegistering: false });
           this.props.history.replace('/');
         })
-        .catch((err) => {
+        .catch(() => {
           this.setState({ isRegistering: false, error: true });
-          console.error(err);
         });
     }
   }
