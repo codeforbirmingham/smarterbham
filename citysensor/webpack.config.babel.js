@@ -51,7 +51,7 @@ const client = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_URL: isProduction
-          ? JSON.stringify('https://?')
+          ? JSON.stringify('https://localhost:8000')
           : JSON.stringify('http://localhost:8000'),
       },
     }),
@@ -129,11 +129,21 @@ const server = {
         mangle: isProduction,
       },
     }),
-    new CopyWebpackPlugin([{
-      from: `${serverPath}/log/`,
-      to: `${buildPath}/log/`,
-      ignore: ['**/*.log'],
-    }]),
+    new CopyWebpackPlugin([
+      {
+        from: `${serverPath}/log/`,
+        to: `${buildPath}/log/`,
+        ignore: ['**/*.log'],
+      },
+      {
+        from: 'certs/',
+        to: `${buildPath}/certs/`,
+      },
+      {
+        from: 'aws_config.json',
+        to: `${buildPath}/`,
+      },
+    ]),
   ],
   externals: [nodeExternals()], // ignores including node_modules
 };

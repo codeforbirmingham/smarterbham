@@ -2,6 +2,7 @@ import Express from 'express';
 import fs from 'fs';
 import WiFiControl from 'wifi-control';
 import Logger from '../utilities/logger';
+import Sensor from '../sensor';
 
 const rootDir = process.env.NODE_ENV === 'production' ? __dirname : `${__dirname}/..`;
 const router = Express.Router();
@@ -46,6 +47,8 @@ router.post('/networks', (req, res) => {
     // create json file for storing network info
     Logger.info(`Saved access point: ${req.body.ssid}`);
     fs.writeFileSync(`${rootDir}/ap.json`, JSON.stringify(ap));
+    // register sensor!
+    Sensor.register();
     return res.status(200).send(wifiRes);
   });
 });

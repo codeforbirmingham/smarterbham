@@ -1,4 +1,4 @@
-aws_config.js
+aws_config.json
 certs/
 node_modules/
 dist/
