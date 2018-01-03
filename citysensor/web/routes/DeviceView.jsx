@@ -12,6 +12,7 @@ const styles = () => ({
   },
   table: {
     width: '80%',
+    margin: '0 auto',
   },
 });
 
