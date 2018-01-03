@@ -1,23 +1,16 @@
 /* eslint-disable no-unused-vars */
-import fs from 'fs';
 import path from 'path';
 import { Server } from 'http';
 import Express from 'express';
 import bodyParser from 'body-parser';
-import WiFiControl from 'wifi-control';
+import deviceRoutes from './routes/device';
 import Logger from './utilities/logger';
 
 const app = new Express();
 const server = new Server(app);
 const port = process.env.PORT || 8000;
-const env = process.env.NODE_ENV;
 // configurable path directory
-const dirPath = env === 'production' ? __dirname : `${__dirname}/../dist`;
-
-// https://www.npmjs.com/package/wifi-control
-WiFiControl.init({
-  debug: env !== 'production',
-});
+const dirPath = process.env.NODE_ENV === 'production' ? __dirname : `${__dirname}/../dist`;
 
 // define the folder that will be used for static assets
 app.use(Express.static(path.resolve(dirPath)));
@@ -37,44 +30,7 @@ app.use((req, res, next) => {
 /**
 * Device API Routes
 */
-app.get('/currentConfig', (req, res) => {
-  fs.readFile(`${__dirname}/ap.json`, { encoding: 'utf-8' }, (err, data) => {
-    if (err) {
-      res.status(404).send('Config not found');
-    } else {
-      res.send(data);
-    }
-  });
-});
-
-app.get('/networks', (req, res) => {
-  WiFiControl.scanForWiFi((err, wifiRes) => {
-    if (err) {
-      Logger.warn(err);
-      return res.status(500).send(err);
-    }
-    const wifiNetworks = wifiRes.networks.map(network => network);
-    return res.send(wifiNetworks);
-  });
-});
-
-app.post('/networks', (req, res) => {
-  const ap = {
-    ssid: req.body.ssid,
-    password: req.body.password,
-  };
-
-  WiFiControl.connectToAP(ap, (err, wifiRes) => {
-    if (err) {
-      Logger.warn(err);
-      return res.status(500).send(err);
-    }
-    // create json file for storing network info
-    Logger.info(`Saved access point: ${req.body.ssid}`);
-    fs.writeFileSync(`${__dirname}/ap.json`, JSON.stringify(ap));
-    return res.status(200).send(wifiRes);
-  });
-});
+app.use('/', deviceRoutes);
 
 // Error handling middleware, must be defined after all app.use() calls
 app.use((err, req, res, next) => {
