@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build:dev": "npm run clean && webpack -d",
-    "build": "npm run clean && webpack --define process.env.NODE_ENV=\"'production'\" --progress",
+    "build:prod": "npm run clean && webpack --define process.env.NODE_ENV=\"'production'\" --progress",
     "start:web": "webpack-dev-server --hot --inline --define process.env.NODE_ENV=\"'development'\" --progress --colors",
     "start:dev": "export NODE_ENV=development && nodemon server/server.js",
-    "start": "export NODE_ENV=production && node dist/server.bundle.js -f certs/ -F aws_config.js",
+    "start:prod": "export NODE_ENV=production && node dist/server.bundle.js",
     "lint": "eslint web server --ext=js --ext=jsx",
     "clean": "rm -rf ./dist"
   },
@@ -33,6 +33,7 @@
     "react-dom": "16.2.0",
     "react-router-dom": "4.2.2",
     "socket.io": "2.0.4",
+    "socket.io-client": "2.0.4",
     "wifi-control": "2.0.1"
   },
   "devDependencies": {

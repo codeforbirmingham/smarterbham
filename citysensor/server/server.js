@@ -3,17 +3,19 @@ import path from 'path';
 import { Server } from 'http';
 import Express from 'express';
 import bodyParser from 'body-parser';
-import deviceRoutes from './routes/device';
+import deviceApi from './api/device';
 import Logger from './utilities/logger';
+import Sensor from './api/sensor';
 
 const app = new Express();
 const server = new Server(app);
-const port = process.env.PORT || 8000;
-// configurable path directory
-const dirPath = process.env.NODE_ENV === 'production' ? __dirname : `${__dirname}/../dist`;
+const io = require('socket.io')(server);
+
+const port = 8000;
+const staticPath = process.env.NODE_ENV === 'production' ? __dirname : `${__dirname}/../dist`;
 
 // define the folder that will be used for static assets
-app.use(Express.static(path.resolve(dirPath)));
+app.use(Express.static(path.resolve(staticPath)));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -28,9 +30,11 @@ app.use((req, res, next) => {
 });
 
 /**
-* Device API Routes
+* Device APIs
 */
-app.use('/', deviceRoutes);
+app.use('/', deviceApi);
+Sensor.initSocket(io);
+Sensor.register();
 
 // Error handling middleware, must be defined after all app.use() calls
 app.use((err, req, res, next) => {
@@ -40,7 +44,7 @@ app.use((err, req, res, next) => {
 
 // serve up index file so react can do its thing (must be after api routes)
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(dirPath, 'index.html'));
+  res.sendFile(path.resolve(staticPath, 'index.html'));
 });
 
 server.listen(port, (err) => {

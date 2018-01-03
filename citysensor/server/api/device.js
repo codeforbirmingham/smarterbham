@@ -2,7 +2,7 @@ import Express from 'express';
 import fs from 'fs';
 import WiFiControl from 'wifi-control';
 import Logger from '../utilities/logger';
-import Sensor from '../sensor';
+import Sensor from '../api/sensor';
 
 const rootDir = process.env.NODE_ENV === 'production' ? __dirname : `${__dirname}/..`;
 const router = Express.Router();
@@ -25,7 +25,7 @@ router.get('/currentConfig', (req, res) => {
 router.get('/networks', (req, res) => {
   WiFiControl.scanForWiFi((err, wifiRes) => {
     if (err) {
-      Logger.warn(err);
+      Logger.error(err);
       return res.status(500).send(err);
     }
     const wifiNetworks = wifiRes.networks.map(network => network);
@@ -41,7 +41,7 @@ router.post('/networks', (req, res) => {
 
   WiFiControl.connectToAP(ap, (err, wifiRes) => {
     if (err) {
-      Logger.warn(err);
+      Logger.error(err);
       return res.status(500).send(err);
     }
     // create json file for storing network info

@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-const nodeUrl = 'http://localhost:8000';
 const deviceApi = axios.create({
-  baseURL: nodeUrl,
+  baseURL: process.env.NODE_URL,
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',

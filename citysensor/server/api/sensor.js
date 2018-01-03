@@ -2,13 +2,17 @@
  *  Reports sensor readings from the device and updates the city_sensor
  * shadow on aws.
  */
+import fs from 'fs';
 import aws from 'aws-iot-device-sdk';
 import _ from 'lodash';
-import Logger from './utilities/logger';
-import awsConfig from '../aws_config.json';
+import Logger from '../utilities/logger';
+import awsConfig from '../../aws_config.json';
+
+const rootDir = process.env.NODE_ENV === 'production' ? __dirname : `${__dirname}/..`;
 
 class Sensor {
   constructor() {
+    this.socket = null;
     this.shadow = aws.thingShadow({
       keyPath: `certs/${awsConfig.privateKey}`,
       certPath: `certs/${awsConfig.clientCert}`,
@@ -19,27 +23,6 @@ class Sensor {
       protocol: 'mqtts',
       port: awsConfig.port,
       host: awsConfig.host,
-    });
-    this.shadow.on('status', (thingName, stat, clientToken, stateObject) => {
-      if (stat === 'rejected') {
-        Logger.error(stateObject);
-      }
-    });
-  }
-
-  register() {
-    this.shadow.register(awsConfig.thingName, { ignoreDeltas: true }, (err, failedTopics) => {
-      if (_.isEmpty(err) && _.isEmpty(failedTopics)) {
-        Logger.info(`registered ${awsConfig.thingName}`);
-        // report data every 10 seconds
-        setInterval(() => {
-          const reported = this.read();
-          this.shadow.update(awsConfig.thingName, { state: { reported } });
-        }, 10000);
-      } else {
-        Logger.error(err);
-        Logger.error(failedTopics);
-      }
     });
   }
 
@@ -68,14 +51,48 @@ class Sensor {
     return Math.random() * 50;
   }
 
-  read() {
-    return {
+  initSocket(io) {
+    this.socket = io;
+  }
+
+  register() {
+    if (this.socket && fs.existsSync(`${rootDir}/ap.json`)) {
+      this.shadow.register(awsConfig.thingName, { ignoreDeltas: true }, (err, failedTopics) => {
+        if (_.isEmpty(err) && _.isEmpty(failedTopics)) {
+          Logger.info(`registered ${awsConfig.thingName} with AWS`);
+          this.isRegistered = true;
+          this.onStatus();
+          // report data every 10 seconds
+          setInterval(() => this.onUpdate(), 10000);
+        } else {
+          Logger.error(err);
+          Logger.error(failedTopics);
+        }
+      });
+    }
+  }
+
+  onStatus() {
+    this.shadow.on('status', (thingName, stat, clientToken, stateObject) => {
+      // emit to web client
+      this.socket.emit('status', stat);
+      if (stat === 'rejected') {
+        Logger.error(stateObject);
+      }
+    });
+  }
+
+  onUpdate() {
+    const reported = {
       temperature: this.temperature,
       humidity: this.humidity,
       noise: this.noise,
       lights: this.lights,
       particle_size: this.particleSize,
     };
+    this.shadow.update(awsConfig.thingName, { state: { reported } });
+    // emit to web client
+    this.socket.emit('update', reported);
   }
 }
 
