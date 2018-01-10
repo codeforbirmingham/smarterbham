@@ -100,14 +100,11 @@ class Register extends React.Component {
   }
 
   renderSelectOptions() {
-    return this.state.networks.map((network) => {
-      const isSecure = network.security !== 'NONE';
-      return (
-        <MenuItem key={network.mac} value={network.mac}>
-          {network.ssid} &nbsp;{isSecure && <i className="fa fa-lock" />}
-        </MenuItem>
-      );
-    });
+    return this.state.networks.map(network => (
+      <MenuItem key={network.mac} value={network.mac}>
+        {network.ssid} &nbsp;{network.security && <i className="fa fa-lock" />}
+      </MenuItem>
+    ));
   }
 
   render() {

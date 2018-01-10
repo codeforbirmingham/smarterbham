@@ -1,13 +1,12 @@
 import Express from 'express';
 import fs from 'fs';
-import WiFiControl from 'wifi-control';
+import WiFiControl from '../utilities/wifi-control';
 import Logger from '../utilities/logger';
 import Sensor from '../api/sensor';
 
 const rootDir = process.env.NODE_ENV === 'production' ? __dirname : `${__dirname}/..`;
 const router = Express.Router();
 
-// https://www.npmjs.com/package/wifi-control
 WiFiControl.init({
   debug: process.env.NODE_ENV !== 'production',
 });
@@ -23,14 +22,14 @@ router.get('/currentConfig', (req, res) => {
 });
 
 router.get('/networks', (req, res) => {
-  WiFiControl.scanForWiFi((err, wifiRes) => {
-    if (err) {
+  WiFiControl.scan()
+    .then((networks) => {
+      res.send(networks);
+    })
+    .catch((err) => {
       Logger.error(err);
-      return res.status(500).send(err);
-    }
-    const wifiNetworks = wifiRes.networks.map(network => network);
-    return res.send(wifiNetworks);
-  });
+      res.status(500).send(err);
+    });
 });
 
 router.post('/networks', (req, res) => {
@@ -39,7 +38,7 @@ router.post('/networks', (req, res) => {
     password: req.body.password,
   };
 
-  WiFiControl.connectToAP(ap, (err, wifiRes) => {
+  WiFiControl.connect(ap, (err, wifiRes) => {
     if (err) {
       Logger.error(err);
       return res.status(500).send(err);

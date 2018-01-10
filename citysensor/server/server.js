@@ -38,6 +38,7 @@ Sensor.register();
 
 // Error handling middleware, must be defined after all app.use() calls
 app.use((err, req, res, next) => {
+  Logger.error('--Caught Middleware Exception--');
   Logger.error(err);
   res.status(err.status || 500).end();
 });
