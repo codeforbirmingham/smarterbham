@@ -9,6 +9,11 @@ import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import deviceApi from '../services/deviceApi';
 import deviceStatus from '../services/deviceStatus';
+import {
+  ERROR,
+  SUCCESS,
+  showNotification,
+} from '../services/notification';
 
 const styles = () => ({
   root: {
@@ -64,10 +69,12 @@ class Register extends React.Component {
       deviceApi.post('/networks', { ssid: network.ssid, password })
         .then(() => {
           this.setState({ isRegistering: false });
+          showNotification(`Successfully connected to ${network.ssid}!`, SUCCESS);
           this.props.history.replace('/');
         })
         .catch(() => {
-          this.setState({ isRegistering: false, error: true });
+          showNotification(`Unable to connect to ${network.ssid}. Please try again.`, ERROR);
+          this.setState({ isRegistering: false });
         });
     }
   }
@@ -84,6 +91,7 @@ class Register extends React.Component {
     if (_.isEmpty(network.ssid)) {
       isValid = false;
     } else if (network.security !== 'NONE' && _.isEmpty(password)) {
+      showNotification('Password required', ERROR);
       isValid = false;
     } else {
       isValid = true;

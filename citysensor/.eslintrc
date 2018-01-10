@@ -17,6 +17,7 @@
     }],
     "no-plusplus": ["error", {
       "allowForLoopAfterthoughts": true
-    }]
+    }],
+    "react/jsx-filename-extension": "off"
   }
 }
