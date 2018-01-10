@@ -38,18 +38,19 @@ router.post('/networks', (req, res) => {
     password: req.body.password,
   };
 
-  WiFiControl.connect(ap, (err, wifiRes) => {
-    if (err) {
+  WiFiControl.connect(ap)
+    .then((success) => {
+      // create json file for storing network info
+      Logger.info(`Saved access point: ${req.body.ssid}`);
+      fs.writeFileSync(`${rootDir}/ap.json`, JSON.stringify(ap));
+      // register sensor!
+      Sensor.register();
+      return res.status(200).send(success);
+    })
+    .catch((err) => {
       Logger.error(err);
-      return res.status(500).send(err);
-    }
-    // create json file for storing network info
-    Logger.info(`Saved access point: ${req.body.ssid}`);
-    fs.writeFileSync(`${rootDir}/ap.json`, JSON.stringify(ap));
-    // register sensor!
-    Sensor.register();
-    return res.status(200).send(wifiRes);
-  });
+      res.status(500).send(err);
+    });
 });
 
 module.exports = router;

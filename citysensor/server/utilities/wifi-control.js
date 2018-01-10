@@ -47,7 +47,42 @@ class WifiControl {
     });
   }
 
-  connect(ssid, password) {}
+  connect(accessPoint) {
+    this.logger(`Connecting to network: ${accessPoint.ssid}`);
+    return new Promise((resolve, reject) => {
+      switch (this.platform) {
+        case 'linux':
+          // exec('', (err, stdout) => {
+          //   if (err) {
+          //     reject(err);
+          //   } else {
+          //     resolve();
+          //   }
+          // });
+          break;
+        case 'darwin':
+          exec('networksetup -listallhardwareports | awk \'/^Hardware Port: (Wi-Fi|AirPort)$/{getline;print $2}\'', (listErr, port) => { // eslint-disable-line
+            if (listErr) return reject(listErr);
+            const iface = port.trim();
+            exec(`networksetup -setairportnetwork ${iface} ${accessPoint.ssid} ${accessPoint.password}`, (connectErr, stdout) => {
+              if (connectErr || stdout.includes('Error')) {
+                this.logger(stdout);
+                reject(stdout);
+              } else {
+                this.logger('Connected!', stdout);
+                resolve(true);
+              }
+            });
+          });
+          break;
+        default: {
+          const errMsg = `Failed to connect on unsupported system: ${this.platform}`;
+          this.logger(errMsg);
+          reject(errMsg);
+        }
+      }
+    });
+  }
 
   logger(msg) {
     if (this.debug) {
