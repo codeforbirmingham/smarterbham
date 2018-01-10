@@ -47,7 +47,6 @@ export default {
       const macIdx = l.indexOf(macLine) + 1; // get rid of extra white space
       const securityIdx = l.indexOf(securityLine);
       const ssidIdx = l.indexOf(ssidLine);
-    console.log(l)
       wifis.push({
         mac: l.substr(macIdx + macLine.length, 17).trim(),
         ssid: l.substr(ssidIdx + ssidLine.length).trim().replace(/['"]+/g, ''),
