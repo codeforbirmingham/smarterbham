@@ -35,8 +35,7 @@ class DeviceView extends React.Component {
       dataArr.push(data);
       this.setState({ data: dataArr });
     });
-    // TODO: handle accepted/rejected
-    this.socket.on('status', status => console.log(status));
+    // TODO: handle accepted/rejected on 'status' event
   }
 
   render() {

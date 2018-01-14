@@ -11,29 +11,26 @@ import Logger from './utilities/logger';
 import Sensor from './api/sensor';
 
 const dev = process.env.NODE_ENV !== 'production';
-const app = nextJs({
+const nextApp = nextJs({
   dir: './src',
   dev,
 });
-const handle = app.getRequestHandler();
+const handle = nextApp.getRequestHandler();
 
-app.prepare()
+nextApp.prepare()
   .then(() => {
-    const expressApp = express();
-    const server = new Server(expressApp);
+    const app = express();
+    const server = new Server(app);
     const io = socket(server);
 
-    expressApp.use(bodyParser.json());
-
-    /**
-    * Device APIs
-    */
-    expressApp.use('/api/v1', deviceApi);
+    // API Setup
+    app.use(bodyParser.json());
+    app.use('/api/v1', deviceApi);
     Sensor.initSocket(io);
     Sensor.register();
 
-    // Error handling middleware, must be defined after all expressApp.use() calls
-    expressApp.use((err, req, res, next) => {
+    // Error handling middleware, must be defined after all app.use() calls
+    app.use((err, req, res, next) => {
       Logger.error(`--Caught Middleware Exception--\n ${err}`);
       res.status(err.status || 500).end();
     });
@@ -42,7 +39,7 @@ app.prepare()
     * Pages
     */
     // handle server-side redirects based on registered condition
-    expressApp.get('/', (req, res) => {
+    app.get('/', (req, res) => {
       if (fs.existsSync(`${__dirname}/ap.json`)) {
         handle(req, res);
       } else {
@@ -50,7 +47,7 @@ app.prepare()
       }
     });
 
-    expressApp.get('/register', (req, res) => {
+    app.get('/register', (req, res) => {
       if (fs.existsSync(`${__dirname}/ap.json`)) {
         res.redirect('/');
       } else {
@@ -58,7 +55,7 @@ app.prepare()
       }
     });
 
-    expressApp.get('*', (req, res) => handle(req, res));
+    app.get('*', (req, res) => handle(req, res));
 
     server.listen(3000, (err) => {
       if (err) {

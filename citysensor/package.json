@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "build": "next build src",
-    "start": "NODE_ENV=production next start src",
+    "start": "NODE_ENV=production babel-node src/server.js",
     "lint": "eslint src --ext=js"
   },
   "repository": {
