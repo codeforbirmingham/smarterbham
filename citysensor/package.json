@@ -4,13 +4,10 @@
   "description": "birmingham city sensor project",
   "main": "index.js",
   "scripts": {
-    "build:dev": "npm run clean && webpack -d",
-    "build:prod": "npm run clean && webpack --define process.env.NODE_ENV=\"'production'\" --progress",
-    "start:web": "webpack-dev-server --hot --inline --define process.env.NODE_ENV=\"'development'\" --progress --colors",
-    "start:dev": "export NODE_ENV=development && nodemon server/server.js",
-    "start:prod": "export NODE_ENV=production && node dist/server.bundle.js",
-    "lint": "eslint web server --ext=js --ext=jsx",
-    "clean": "rm -rf ./dist"
+    "dev": "nodemon src/server.js",
+    "build": "next build src",
+    "start": "NODE_ENV=production babel-node src/server.js",
+    "lint": "eslint src --ext=js"
   },
   "repository": {
     "type": "git",
@@ -27,34 +24,26 @@
     "body-parser": "1.18.2",
     "express": "4.16.2",
     "lodash": "4.17.4",
-    "material-ui": "1.0.0-beta.25",
+    "material-ui": "1.0.0-beta.28",
+    "next": "4.2.3",
     "prop-types": "15.6.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
-    "react-router-dom": "4.2.2",
     "socket.io": "2.0.4",
     "socket.io-client": "2.0.4"
   },
   "devDependencies": {
     "babel-core": "6.26.0",
-    "babel-loader": "7.1.2",
-    "babel-plugin-transform-async-to-generator": "6.24.1",
+    "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-env": "1.6.1",
     "babel-preset-react": "6.24.1",
-    "copy-webpack-plugin": "4.3.1",
     "eslint": "4.5.0",
     "eslint-config-airbnb": "15.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
-    "html-loader": "0.5.1",
-    "html-webpack-plugin": "2.30.1",
-    "json-loader": "0.5.7",
-    "nodemon": "1.14.7",
-    "uglifyjs-webpack-plugin": "1.1.5",
-    "webpack": "3.10.0",
-    "webpack-dev-server": "2.9.7",
-    "webpack-node-externals": "1.6.0"
+    "nodemon": "1.14.11"
   }
 }

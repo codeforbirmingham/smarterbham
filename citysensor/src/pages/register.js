@@ -8,19 +8,14 @@ import Input from 'material-ui/TextField';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import deviceApi from '../services/deviceApi';
-import deviceStatus from '../services/deviceStatus';
 import {
   ERROR,
   SUCCESS,
   showNotification,
-} from '../services/notification';
+} from '../components/Notification';
+import Layout from '../components/Layout';
 
 const styles = () => ({
-  root: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
-  },
   item: {
     textAlign: 'center',
   },
@@ -48,12 +43,8 @@ class Register extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  async componentWillMount() {
-    if (await deviceStatus.isRegistered()) {
-      this.props.history.replace('/');
-    } else {
-      deviceApi.get('/networks').then(res => this.setState({ networks: res.data }));
-    }
+  componentWillMount() {
+    deviceApi.get('/networks').then(res => this.setState({ networks: res.data }));
   }
 
   onSubmit() {
@@ -70,7 +61,6 @@ class Register extends React.Component {
         .then(() => {
           this.setState({ isRegistering: false });
           showNotification(`Successfully connected to ${network.ssid}!`, SUCCESS);
-          this.props.history.replace('/');
         })
         .catch(() => {
           showNotification(`Unable to connect to ${network.ssid}. Please try again.`, ERROR);
@@ -118,7 +108,7 @@ class Register extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Grid container className={classes.root}>
+      <Layout>
         <Grid item className={classes.item}>
           <h1>Smarter Bham Project</h1>
           <Select
@@ -158,14 +148,13 @@ class Register extends React.Component {
             {this.state.isRegistering ? 'Connecting to WiFi...' : 'Register Device'}
           </Button>
         </Grid>
-      </Grid>
+      </Layout>
     );
   }
 }
 
 Register.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
-  history: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Register);

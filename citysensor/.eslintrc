@@ -18,6 +18,7 @@
     "no-plusplus": ["error", {
       "allowForLoopAfterthoughts": true
     }],
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "react/react-in-jsx-scope": "off"
   }
 }

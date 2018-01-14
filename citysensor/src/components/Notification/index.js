@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Notification from 'components/Notification';
+import Notification from './Notification';
 
 export const SUCCESS = 'success';
 export const ERROR = 'error';

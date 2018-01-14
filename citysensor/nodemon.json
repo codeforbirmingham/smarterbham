@@ -1,8 +1,8 @@
 {
   "verbose": true,
   "debug": true,
-  "exec": "npm run build:dev && babel-node {{filename}}",
-  "watch": "server/",
+  "exec": "NODE_ENV=development babel-node {{filename}}",
+  "watch": "src/server.js",
   "ext": "js",
   "ignore": ["dist/app.bundle.js", "dist/server.js"]
 }

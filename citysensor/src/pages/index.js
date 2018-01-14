@@ -4,7 +4,6 @@ import Grid from 'material-ui/Grid';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import { withStyles } from 'material-ui/styles';
 import io from 'socket.io-client';
-import deviceStatus from '../services/deviceStatus';
 
 const styles = () => ({
   root: {
@@ -25,12 +24,8 @@ class DeviceView extends React.Component {
     };
   }
 
-  async componentWillMount() {
-    if (await deviceStatus.isRegistered()) {
-      this.setupListeners();
-    } else {
-      this.props.history.replace('/register');
-    }
+  componentWillMount() {
+    this.setupListeners();
   }
 
   componentWillUnmount() {
@@ -81,7 +76,6 @@ class DeviceView extends React.Component {
 
 DeviceView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
-  history: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(DeviceView);

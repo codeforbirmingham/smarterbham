@@ -1,8 +1,7 @@
 aws_config.json
 certs/
 node_modules/
-dist/
+**/.next/
 **/*.log
 **/ap.json
-
 *.DS_Store

@@ -1,13 +1,19 @@
 {
   "presets": [
-    ["react"], ["env", {
-      "targets": {
-        "browsers": ["last 2 Chrome versions"]
-      }
-    }]
+    "env",
+    "react"
   ],
   "plugins": [
     "transform-object-rest-spread",
-    "transform-async-to-generator"
-  ]
+    "transform-class-properties",
+    "transform-runtime"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "es2015",
+        "./babel"
+       ]
+    }
+  }
 }

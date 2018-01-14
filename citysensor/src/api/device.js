@@ -4,7 +4,7 @@ import WiFiControl from '../utilities/wifi-control';
 import Logger from '../utilities/logger';
 import Sensor from '../api/sensor';
 
-const rootDir = process.env.NODE_ENV === 'production' ? __dirname : `${__dirname}/..`;
+const rootDir = __dirname;
 const router = Express.Router();
 
 WiFiControl.init({
