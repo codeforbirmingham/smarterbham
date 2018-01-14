@@ -8,6 +8,7 @@ import Button from 'material-ui/Button';
 import Input from 'material-ui/TextField';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
+import NProgress from 'nprogress';
 import deviceApi from '../services/deviceApi';
 import {
   ERROR,
@@ -57,16 +58,18 @@ class Register extends React.Component {
     const network = _.find(networks, { mac: macAddress }) || {};
 
     if (this.isValid()) {
+      NProgress.start();
       this.setState({ isRegistering: true, error: false });
       deviceApi.post('/networks', { ssid: network.ssid, password })
         .then(() => {
-          this.setState({ isRegistering: false });
-          showNotification(`Successfully connected to ${network.ssid}!`, SUCCESS);
           Router.replace('/');
+          this.setState({ isRegistering: false });
+          NProgress.done();
         })
         .catch(() => {
           showNotification(`Unable to connect to ${network.ssid}. Please try again.`, ERROR);
           this.setState({ isRegistering: false });
+          NProgress.done();
         });
     }
   }

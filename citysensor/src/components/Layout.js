@@ -3,14 +3,7 @@ import PropTypes from 'prop-types';
 import Reboot from 'material-ui/Reboot';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-import NProgress from 'nprogress';
 import Head from 'next/head';
-import Router from 'next/router';
-
-Router.onRouteChangeStart = () => NProgress.start();
-Router.onRouteChangeComplete = () => NProgress.done();
-Router.onRouteChangeError = () => NProgress.done();
-
 const styles = () => ({
   root: {
     height: '100%',
