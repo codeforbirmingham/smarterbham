@@ -8,7 +8,7 @@ import _ from 'lodash';
 import Logger from '../utilities/logger';
 import awsConfig from '../../aws_config.json';
 
-const rootDir = process.env.NODE_ENV === 'production' ? __dirname : `${__dirname}/..`;
+const rootDir = `${__dirname}/..`;
 
 class Sensor {
   constructor() {

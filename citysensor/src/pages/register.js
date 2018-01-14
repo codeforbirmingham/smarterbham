@@ -1,4 +1,5 @@
 import React from 'react';
+import Router from 'next/router';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
@@ -61,6 +62,7 @@ class Register extends React.Component {
         .then(() => {
           this.setState({ isRegistering: false });
           showNotification(`Successfully connected to ${network.ssid}!`, SUCCESS);
+          Router.replace('/');
         })
         .catch(() => {
           showNotification(`Unable to connect to ${network.ssid}. Please try again.`, ERROR);

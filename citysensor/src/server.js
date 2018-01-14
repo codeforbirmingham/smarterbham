@@ -16,45 +16,56 @@ const app = next({
 });
 const handle = app.getRequestHandler();
 
-app.prepare().then(() => {
-  const expressApp = express();
-  const server = new Server(expressApp);
-  const io = require('socket.io')(server);
+app.prepare()
+  .then(() => {
+    const expressApp = express();
+    const server = new Server(expressApp);
+    const io = require('socket.io')(server);
 
-  expressApp.use(bodyParser.json());
+    expressApp.use(bodyParser.json());
 
-  /**
-  * Device APIs
-  */
-  expressApp.use('/api/v1', deviceApi);
-  Sensor.initSocket(io);
-  Sensor.register();
+    /**
+    * Device APIs
+    */
+    expressApp.use('/api/v1', deviceApi);
+    Sensor.initSocket(io);
+    Sensor.register();
 
-  // Error handling middleware, must be defined after all expressApp.use() calls
-  expressApp.use((err, req, res, next) => {
-    Logger.error('--Caught Middleware Exception--');
-    Logger.error(err);
-    res.status(err.status || 500).end();
-  });
-
-  /**
-  * Pages
-  */
-  expressApp.get('/', (req, res) => {
-    let page = '/register';
-    if (fs.existsSync(`${__dirname}/ap.json`)) {
-      page = '/';
-    }
-    app.render(req, res, page);
-  });
-
-  expressApp.get('*', (req, res) => handle(req, res));
-
-  server.listen(3000, (err) => {
-    if (err) {
+    // Error handling middleware, must be defined after all expressApp.use() calls
+    expressApp.use((err, req, res, next) => {
+      Logger.error('--Caught Middleware Exception--');
       Logger.error(err);
-      throw err;
-    }
-    console.log('> Ready on http://localhost:3000');
-  });
-});
+      res.status(err.status || 500).end();
+    });
+
+    /**
+    * Pages
+    */
+    // handle server-side redirects based on registered condition
+    expressApp.get('/', (req, res) => {
+      if (fs.existsSync(`${__dirname}/ap.json`)) {
+        handle(req, res);
+      } else {
+        res.redirect('/register');
+      }
+    });
+
+    expressApp.get('/register', (req, res) => {
+      if (fs.existsSync(`${__dirname}/ap.json`)) {
+        res.redirect('/');
+      } else {
+        handle(req, res);
+      }
+    });
+
+    expressApp.get('*', (req, res) => handle(req, res));
+
+    server.listen(3000, (err) => {
+      if (err) {
+        Logger.error(err);
+        throw err;
+      }
+      console.log('> Ready on http://localhost:3000');
+    });
+  })
+  .catch(err => Logger.error(`Failed to start server: ${err}`));

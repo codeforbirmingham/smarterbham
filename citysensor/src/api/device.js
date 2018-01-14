@@ -1,11 +1,11 @@
-import Express from 'express';
+import express from 'express';
 import fs from 'fs';
 import WiFiControl from '../utilities/wifi-control';
 import Logger from '../utilities/logger';
-import Sensor from '../api/sensor';
+import Sensor from './sensor';
 
-const rootDir = __dirname;
-const router = Express.Router();
+const rootDir = `${__dirname}/..`;
+const router = express.Router();
 
 WiFiControl.init({
   debug: process.env.NODE_ENV !== 'production',

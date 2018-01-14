@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Grid from 'material-ui/Grid';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import { withStyles } from 'material-ui/styles';
 import io from 'socket.io-client';
+import Layout from '../components/Layout';
 
 const styles = () => ({
-  root: {
-    textAlign: 'center',
-  },
   table: {
     width: '80%',
     margin: '0 auto',
@@ -18,7 +15,7 @@ const styles = () => ({
 class DeviceView extends React.Component {
   constructor() {
     super();
-    this.socket = io(process.env.NODE_URL);
+    this.socket = io('http://localhost:3000');
     this.state = {
       data: [],
     };
@@ -45,8 +42,7 @@ class DeviceView extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Grid className={classes.root}>
-        <h1>Device is registered!</h1>
+      <Layout>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
@@ -69,7 +65,7 @@ class DeviceView extends React.Component {
             ))}
           </TableBody>
         </Table>
-      </Grid>
+      </Layout>
     );
   }
 }
