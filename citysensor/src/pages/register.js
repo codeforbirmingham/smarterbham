@@ -12,7 +12,6 @@ import NProgress from 'nprogress';
 import deviceApi from '../services/deviceApi';
 import {
   ERROR,
-  SUCCESS,
   showNotification,
 } from '../components/Notification';
 import Layout from '../components/Layout';

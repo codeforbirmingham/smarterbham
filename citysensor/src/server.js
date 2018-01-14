@@ -1,16 +1,17 @@
 /* eslint-disable no-unused-vars */
-import next from 'next';
+import nextJs from 'next';
 import path from 'path';
 import fs from 'fs';
 import { Server } from 'http';
 import express from 'express';
+import socket from 'socket.io';
 import bodyParser from 'body-parser';
 import deviceApi from './api/device';
 import Logger from './utilities/logger';
 import Sensor from './api/sensor';
 
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({
+const app = nextJs({
   dir: './src',
   dev,
 });
@@ -20,7 +21,7 @@ app.prepare()
   .then(() => {
     const expressApp = express();
     const server = new Server(expressApp);
-    const io = require('socket.io')(server);
+    const io = socket(server);
 
     expressApp.use(bodyParser.json());
 
@@ -33,8 +34,7 @@ app.prepare()
 
     // Error handling middleware, must be defined after all expressApp.use() calls
     expressApp.use((err, req, res, next) => {
-      Logger.error('--Caught Middleware Exception--');
-      Logger.error(err);
+      Logger.error(`--Caught Middleware Exception--\n ${err}`);
       res.status(err.status || 500).end();
     });
 

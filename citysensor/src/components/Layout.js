@@ -4,6 +4,7 @@ import Reboot from 'material-ui/Reboot';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Head from 'next/head';
+
 const styles = () => ({
   root: {
     height: '100%',
