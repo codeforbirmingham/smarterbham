@@ -6,7 +6,7 @@ import { Server } from 'http';
 import express from 'express';
 import socket from 'socket.io';
 import bodyParser from 'body-parser';
-import deviceApi from './api/device';
+import networkApi from './api/networks';
 import Logger from './utilities/logger';
 import Sensor from './api/sensor';
 
@@ -25,7 +25,7 @@ nextApp.prepare()
 
     // API Setup
     app.use(bodyParser.json());
-    app.use('/api/v1', deviceApi);
+    app.use('/api/v1/networks', networkApi);
     Sensor.initSocket(io);
     Sensor.register();
 

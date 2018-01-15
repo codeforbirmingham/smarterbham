@@ -11,7 +11,7 @@ WiFiControl.init({
   debug: process.env.NODE_ENV !== 'production',
 });
 
-router.get('/currentConfig', (req, res) => {
+router.get('/config', (req, res) => {
   fs.readFile(`${rootDir}/ap.json`, { encoding: 'utf-8' }, (err, data) => {
     if (err) {
       res.status(404).send('Config not found');
@@ -21,7 +21,7 @@ router.get('/currentConfig', (req, res) => {
   });
 });
 
-router.get('/networks', (req, res) => {
+router.get('/', (req, res) => {
   WiFiControl.scan()
     .then((networks) => {
       res.send(networks);
@@ -32,7 +32,7 @@ router.get('/networks', (req, res) => {
     });
 });
 
-router.post('/networks', (req, res) => {
+router.post('/', (req, res) => {
   const ap = {
     ssid: req.body.ssid,
     password: req.body.password,
