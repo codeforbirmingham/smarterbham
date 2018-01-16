@@ -44,7 +44,7 @@ class Register extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     deviceApi.get('/networks').then(res => this.setState({ networks: res.data }));
   }
 
