@@ -51,8 +51,9 @@ class Sensor {
     return Math.random() * 50;
   }
 
-  initSocket(io) {
+  init(io) {
     this.socket = io;
+    this.register();
   }
 
   register() {

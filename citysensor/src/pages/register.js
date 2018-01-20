@@ -15,6 +15,7 @@ import {
   showNotification,
 } from '../components/Notification';
 import Layout from '../components/Layout';
+import withRoot from '../components/withRoot';
 
 const styles = () => ({
   item: {
@@ -161,4 +162,4 @@ Register.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
-export default withStyles(styles)(Register);
+export default withRoot(withStyles(styles)(Register));

@@ -4,6 +4,7 @@ import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Ta
 import { withStyles } from 'material-ui/styles';
 import io from 'socket.io-client';
 import Layout from '../components/Layout';
+import withRoot from '../components/withRoot';
 
 const styles = () => ({
   table: {
@@ -73,4 +74,4 @@ DeviceView.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
-export default withStyles(styles)(DeviceView);
+export default withRoot(withStyles(styles)(DeviceView));

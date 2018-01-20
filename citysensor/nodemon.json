@@ -4,5 +4,5 @@
   "exec": "NODE_ENV=development babel-node {{filename}}",
   "watch": "src/server.js",
   "ext": "js",
-  "ignore": ["dist/app.bundle.js", "dist/server.js"]
+  "ignore": ["dist/server.js"]
 }

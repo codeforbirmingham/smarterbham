@@ -1,9 +1,9 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Snackbar, { SnackbarContent } from 'material-ui/Snackbar';
 import { withStyles } from 'material-ui/styles';
 
-// TODO: need to change out colors based on notification type
 const styles = () => ({
   info: {
     backgroundColor: '#333',
