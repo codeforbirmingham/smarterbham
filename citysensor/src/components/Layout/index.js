@@ -4,9 +4,13 @@ import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import { MuiThemeProvider } from 'material-ui/styles';
 import Reboot from 'material-ui/Reboot';
-import { theme } from './getPageContext';
+import getPageContext from './getPageContext';
 
 class Layout extends React.Component {
+  componentWillMount() {
+    this.pageContext = this.props.pageContext || getPageContext();
+  }
+
   componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -17,7 +21,7 @@ class Layout extends React.Component {
 
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme={this.pageContext.theme}>
         <Reboot />
         <Grid
           container
@@ -34,11 +38,13 @@ class Layout extends React.Component {
 
 Layout.defaultProps = {
   viewportHeight: false,
+  pageContext: null,
 };
 
 Layout.propTypes = {
   children: PropTypes.object.isRequired,
   viewportHeight: PropTypes.bool,
+  pageContext: PropTypes.object,
 };
 
 export default Layout;

@@ -5,7 +5,7 @@ import { blue, green } from 'material-ui/colors';
 
 // A theme with custom primary and secondary color.
 // It's optional.
-export const theme = createMuiTheme({
+const theme = createMuiTheme({
   palette: {
     primary: {
       light: blue[300],
