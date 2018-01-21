@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import { withStyles } from 'material-ui/styles';
 import io from 'socket.io-client';
-import Layout from '../components/Layout';
+import Container from '../components/Container';
 import withRoot from '../components/withRoot';
 
 const styles = () => ({
@@ -42,7 +42,7 @@ class DeviceView extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Layout>
+      <Container>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
@@ -65,7 +65,7 @@ class DeviceView extends React.Component {
             ))}
           </TableBody>
         </Table>
-      </Layout>
+      </Container>
     );
   }
 }

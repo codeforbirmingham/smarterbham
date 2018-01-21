@@ -3,6 +3,7 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import JssProvider from 'react-jss/lib/JssProvider';
 import getPageContext from '../components/getPageContext';
 
+// https://github.com/mui-org/material-ui/tree/v1-beta/examples/nextjs
 class MyDocument extends Document {
   render() {
     const { pageContext } = this.props;
@@ -10,9 +11,8 @@ class MyDocument extends Document {
     return (
       <html lang="en" dir="ltr">
         <Head>
-          <title>My page</title>
+          <title>City Sensor</title>
           <meta charSet="utf-8" />
-          {/* Use minimum-scale=1 to enable GPU rasterization */}
           <meta
             name="viewport"
             content={
@@ -20,16 +20,15 @@ class MyDocument extends Document {
               'minimum-scale=1, width=device-width, height=device-height'
             }
           />
-          {/* PWA primary color */}
           <meta name="theme-color" content={pageContext.theme.palette.primary[500]} />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
-          />
+          <link rel="stylesheet" href="/static/css/fonts.css" />
+          <link rel="stylesheet" href="/static/css/font-awesome.min.css" />
+          <link rel="stylesheet" type="text/css" href="/static/css/nprogress.min.css" />
         </Head>
         <body>
           <Main />
           <NextScript />
+          <div id="notification" />
         </body>
       </html>
     );

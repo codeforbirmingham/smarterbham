@@ -14,7 +14,7 @@ import {
   ERROR,
   showNotification,
 } from '../components/Notification';
-import Layout from '../components/Layout';
+import Container from '../components/Container';
 import withRoot from '../components/withRoot';
 
 const styles = () => ({
@@ -113,7 +113,7 @@ class Register extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Layout>
+      <Container viewportHeight>
         <Grid item className={classes.item}>
           <h1>Smarter Bham Project</h1>
           <Select
@@ -153,7 +153,7 @@ class Register extends React.Component {
             {this.state.isRegistering ? 'Connecting to WiFi...' : 'Register Device'}
           </Button>
         </Grid>
-      </Layout>
+      </Container>
     );
   }
 }
