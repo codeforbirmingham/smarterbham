@@ -1,7 +1,7 @@
 import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
 import JssProvider from 'react-jss/lib/JssProvider';
-import getPageContext from '../components/getPageContext';
+import getPageContext from '../components/Layout/getPageContext';
 
 // https://github.com/mui-org/material-ui/tree/v1-beta/examples/nextjs
 class MyDocument extends Document {
