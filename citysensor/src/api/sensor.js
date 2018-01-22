@@ -1,12 +1,12 @@
 /**
- *  Reports sensor readings from the device and updates the city_sensor
+ * Reports sensor readings from the device and updates the city_sensor
  * shadow on aws.
  */
-import fs from 'fs';
-import aws from 'aws-iot-device-sdk';
-import _ from 'lodash';
-import Logger from '../utilities/logger';
-import awsConfig from '../../aws_config.json';
+const fs = require('fs');
+const aws = require('aws-iot-device-sdk');
+const _ = require('lodash');
+const Logger = require('../utilities/logger');
+const awsConfig = require('../../aws_config.json');
 
 const rootDir = `${__dirname}/..`;
 

@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
-import nextJs from 'next';
-import path from 'path';
-import fs from 'fs';
-import { Server } from 'http';
-import express from 'express';
-import socket from 'socket.io';
-import bodyParser from 'body-parser';
-import networkApi from './api/networks';
-import Logger from './utilities/logger';
-import Sensor from './api/sensor';
+const nextJs = require('next');
+const path = require('path');
+const fs = require('fs');
+const Server = require('http').Server;
+const express = require('express');
+const socket = require('socket.io');
+const bodyParser = require('body-parser');
+const networkApi = require('./api/networks');
+const Logger = require('./utilities/logger');
+const Sensor = require('./api/sensor');
 
 const dev = process.env.NODE_ENV !== 'production';
 const nextApp = nextJs({

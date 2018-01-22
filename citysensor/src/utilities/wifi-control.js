@@ -1,4 +1,4 @@
-import parseStdout from './parseStdout';
+const parseStdout = require('./parseStdout');
 
 const exec = require('child_process').exec;
 
@@ -91,4 +91,4 @@ class WifiControl {
   }
 }
 
-export default new WifiControl();
+module.exports = new WifiControl();

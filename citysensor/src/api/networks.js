@@ -1,8 +1,8 @@
-import express from 'express';
-import fs from 'fs';
-import WiFiControl from '../utilities/wifi-control';
-import Logger from '../utilities/logger';
-import Sensor from './sensor';
+const express = require('express');
+const fs = require('fs');
+const WiFiControl = require('../utilities/wifi-control');
+const Logger = require('../utilities/logger');
+const Sensor = require('./sensor');
 
 const rootDir = `${__dirname}/..`;
 const router = express.Router();

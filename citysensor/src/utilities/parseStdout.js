@@ -1,4 +1,4 @@
-import _ from 'lodash';
+const _ = require('lodash');
 
 const byteLength = (str) => {
   // returns the byte length of a utf8 string
@@ -11,7 +11,7 @@ const byteLength = (str) => {
   return s;
 };
 
-export default {
+module.exports = {
   airport: (stdout) => {
     const lines = stdout.split('\n');
     const colMac = lines[0].indexOf('BSSID');
