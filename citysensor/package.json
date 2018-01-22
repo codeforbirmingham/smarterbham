@@ -1,14 +1,19 @@
 {
   "name": "bham_city_sensor",
-  "version": "0.0.1",
+  "version": "0.8.0",
   "description": "birmingham city sensor project",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.js",
     "build": "NODE_ENV=production next build src",
-    "start": "NODE_ENV=production babel-node src/server.js",
+    "start": "NODE_ENV=production node src/server.js",
+    "deploy": "npm run build && tar -cvf build.tar.gz certs aws_config.json src/build src/server.js",
     "lint": "eslint src --ext=js"
   },
+  "engines": {
+    "node": ">=8.5.0"
+  },
+  "engineStrict": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/codeforbirmingham/smarterbham"
@@ -36,7 +41,6 @@
     "socket.io-client": "2.0.4"
   },
   "devDependencies": {
-    "babel-cli": "6.26.0",
     "babel-preset-env": "1.6.1",
     "eslint": "4.5.0",
     "eslint-config-airbnb": "15.1.0",
