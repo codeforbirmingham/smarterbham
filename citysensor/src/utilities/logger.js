@@ -1,7 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 const _ = require('lodash');
 
-const logPath = `${__dirname}/../log`;
+const logPath = path.join(__dirname, '../log');
 const insertLogData = (data, logLevel) => {
   const parsedData = _.isObject(data) ? JSON.stringify(data) : data;
   const logData = `[${new Date()}] ${parsedData}\n`;

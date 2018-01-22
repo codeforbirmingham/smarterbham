@@ -51,10 +51,5 @@
     "eslint-plugin-react": "^7.1.0",
     "nodemon": "1.14.11",
     "pkg": "4.3.0"
-  },
-  "pkg": {
-    "assets": [
-      "src/.next"
-    ]
   }
 }

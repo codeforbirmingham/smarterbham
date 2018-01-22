@@ -3,12 +3,13 @@
  * shadow on aws.
  */
 const fs = require('fs');
+const path = require('path');
 const aws = require('aws-iot-device-sdk');
 const _ = require('lodash');
 const Logger = require('../utilities/logger');
 const awsConfig = require('../../aws_config.json');
 
-const rootDir = `${__dirname}/..`;
+const rootDir = path.join(__dirname, '..');
 
 class Sensor {
   constructor() {
