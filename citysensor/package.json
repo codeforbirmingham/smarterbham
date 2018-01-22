@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "build": "next build src",
+    "build": "NODE_ENV=production next build src",
     "start": "NODE_ENV=production babel-node src/server.js",
     "lint": "eslint src --ext=js"
   },
@@ -36,12 +36,8 @@
     "socket.io-client": "2.0.4"
   },
   "devDependencies": {
-    "babel-core": "6.26.0",
-    "babel-plugin-transform-class-properties": "6.24.1",
-    "babel-plugin-transform-object-rest-spread": "6.26.0",
-    "babel-plugin-transform-runtime": "6.23.0",
+    "babel-cli": "6.26.0",
     "babel-preset-env": "1.6.1",
-    "babel-preset-react": "6.24.1",
     "eslint": "4.5.0",
     "eslint-config-airbnb": "15.1.0",
     "eslint-plugin-import": "^2.7.0",
