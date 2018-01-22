@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "build": "NODE_ENV=production next build src",
+    "prestart": "npm run build",
     "start": "NODE_ENV=production node src/server.js",
-    "deploy": "npm run build && tar -cvf build.tar.gz certs aws_config.json src/build src/server.js",
+    "predist": "npm run build",
+    "dist": "pkg scripts/pkgApp.js -t node9-linux-x64,node9-macos-x64 --out-path dist",
     "lint": "eslint src --ext=js"
   },
   "engines": {
@@ -47,6 +49,12 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
-    "nodemon": "1.14.11"
+    "nodemon": "1.14.11",
+    "pkg": "4.3.0"
+  },
+  "pkg": {
+    "assets": [
+      "src/.next"
+    ]
   }
 }
