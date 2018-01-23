@@ -4,5 +4,5 @@
   "exec": "NODE_ENV=development node {{filename}}",
   "watch": "src/server.js",
   "ext": "js",
-  "ignore": ["dist/server.js"]
+  "ignore": ["dist/**/*.js"]
 }

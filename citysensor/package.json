@@ -2,25 +2,26 @@
   "name": "bham_city_sensor",
   "version": "0.8.0",
   "description": "birmingham city sensor project",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
+    "lint": "eslint src --ext=js",
     "dev": "nodemon src/server.js",
     "build": "NODE_ENV=production next build src",
     "prestart": "npm run build",
     "start": "NODE_ENV=production node src/server.js",
-    "predist": "npm run build",
-    "dist": "pkg scripts/pkgApp.js -t node9-linux-x64,node9-macos-x64 --out-path dist",
-    "lint": "eslint src --ext=js"
+    "predist": "rm -rf dist && npm run build",
+    "dist": "pkg scripts/pkgApp.js -t node9-macos-x64 -o dist/startServer",
+    "postdist": "cp -R ./{aws_config.json,certs} dist && mkdir dist/src && cp -R src/.next dist/src/.next"
   },
   "engines": {
-    "node": ">=8.5.0"
+    "node": ">=9.0.0"
   },
   "engineStrict": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/codeforbirmingham/smarterbham"
   },
-  "author": "",
+  "author": "Josh Flayhart",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/codeforbirmingham/smarterbham/issues"
@@ -51,5 +52,8 @@
     "eslint-plugin-react": "^7.1.0",
     "nodemon": "1.14.11",
     "pkg": "4.3.0"
+  },
+  "pkg": {
+    "assets": "src/static/**/*"
   }
 }
