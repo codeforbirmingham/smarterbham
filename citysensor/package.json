@@ -10,8 +10,9 @@
     "prestart": "npm run build",
     "start": "NODE_ENV=production node src/server.js",
     "predist": "rm -rf dist && npm run build",
-    "dist": "pkg scripts/pkgApp.js -t node9-macos-x64 -o dist/startServer",
-    "postdist": "cp -R ./{aws_config.json,certs} dist && mkdir dist/src && cp -R src/.next dist/src/.next"
+    "dist": "pkg scripts/pkgApp.js -t node9-linux-x64 -o dist/startServer",
+    "postdist": "cp -R ./{aws_config.json,certs} dist && npm run dist-assets",
+    "dist-assets": "mkdir dist/src && cp -R src/.next dist/src/.next && cp -R src/static dist/src/static"
   },
   "engines": {
     "node": ">=9.0.0"
