@@ -77,11 +77,20 @@ You will also need to modify aws_config.js to include information about your thi
 
 ```
 npm i
-npm run build
-npm start
+HOST=localhost npm run build
+npm run dev
 ```
 
 This will run and update the thing's shadow to include new sensor data every so often. You can log into the AWS IoT console and watch the MQTT events for your thing.
+
+# distributing node to run on device
+
+1. Run `HOST=<device ip> npm run dist` to compile app for distribution
+2. On your Pi device, we need to run as sudoer to SCP citysensor app from your computer to Pi's local var directory: `sudo scp <username>@<computer ip>:/path/to/smarterbham/citysensor/dist/dist-version.tar.gz /var/`
+3. On the Pi, navigate to `cd /var` and extract tarball with `sudo tar -xvf dist-version.tar.gz`
+4. Finally, run `HOST=<device ip> sudo npm start`
+
+HOST environment variable is *required* to allow server to call itself in the API. This changes based on where the app is deployed and therefore is configured at runtime.
 
 # scripts
 

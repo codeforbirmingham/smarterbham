@@ -1,7 +1,7 @@
 {
   "verbose": true,
   "debug": true,
-  "exec": "NODE_ENV=development node {{filename}}",
+  "exec": "NODE_ENV=development HOST=localhost node {{filename}}",
   "watch": "src/server.js",
   "ext": "js",
   "ignore": ["dist/**/*.js"]
