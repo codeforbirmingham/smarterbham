@@ -5,6 +5,8 @@ const nodeExternals = require('webpack-node-externals');
 
 const resolve = toPath => path.resolve(__dirname, toPath);
 
+if (!process.env.HOST) console.log('\x1b[31m', 'Missing required environment variable: HOST=', '\x1b[0m');
+
 module.exports = {
   target: 'node',
   node: {
@@ -22,9 +24,8 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.HOST': JSON.stringify(process.env.HOST),
     }),
   ],
   externals: [nodeExternals()],

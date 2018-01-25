@@ -61,6 +61,7 @@ nextApp.prepare().then(() => {
       Logger.error(err);
       throw err;
     }
-    console.log('> Ready on http://localhost:3000');
+    if (!process.env.HOST) console.log('\x1b[31m', 'Missing required environment variable: HOST=', '\x1b[0m');
+    console.log(`> Ready on http://${process.env.HOST}:3000`);
   });
 }).catch(err => Logger.error(`Failed to start server: ${err}`));

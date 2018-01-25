@@ -16,7 +16,7 @@ const styles = () => ({
 class DeviceView extends React.Component {
   constructor() {
     super();
-    this.socket = io('http://localhost:3000');
+    this.socket = io(`http://${process.env.HOST}:3000`);
     this.state = {
       data: [],
     };
