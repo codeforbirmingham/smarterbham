@@ -37,16 +37,7 @@ Also, you should comment on the following line from /etc/default/hostapd:
 
 # installing node on the raspberry pi zero w
 
-First, you should install node. Make sure you do not have any version of node, nodejs or npm already on the raspberry pi. Follow the instructions here https://blog.miniarray.com/installing-node-js-on-a-raspberry-pi-zero-21a1522db2bb
-
-```
-sudo su -
-apt-get remove --purge npm node nodejs
-cd ~
-wget http://nodejs.org/dist/v4.2.4/node-v4.2.4-linux-armv6l.tar.gz
-cd /usr/local
-tar xzvf ~/node-v4.2.4-linux-armv6l.tar.gz --strip=1
-```
+Run scripts/installNode.sh on your Pi device (may need to make it executable).
 
 # checking out the code
 
