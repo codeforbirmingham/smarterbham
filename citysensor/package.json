@@ -1,21 +1,20 @@
 {
   "name": "bham_city_sensor",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "birmingham city sensor project",
   "main": "src/server.js",
   "scripts": {
     "lint": "eslint src --ext=js",
     "dev": "nodemon src/server.js",
     "build": "NODE_ENV=production next build src",
-    "prestart": "npm run build",
     "start": "NODE_ENV=production node src/server.js",
     "predist": "rm -rf dist && npm run build",
-    "dist": "pkg scripts/pkgApp.js -t node9-linux-x64 -o dist/startServer",
-    "postdist": "cp -R ./{aws_config.json,certs} dist && npm run dist-assets",
-    "dist-assets": "mkdir dist/src && cp -R src/.next dist/src/.next && cp -R src/static dist/src/static"
+    "dist": "webpack -p --config src/webpack.server.config.js && npm run dist-assets",
+    "dist-assets": "cp -R ./{certs,package.json,package-lock.json} dist && cp -R src/.next dist/src/.next && cp -R src/static dist/src/static",
+    "postdist": "cd dist && npm i --production && tar -czvf dist-$npm_package_version.tar.gz -C ./ ."
   },
   "engines": {
-    "node": ">=9.0.0"
+    "node": ">=8.9.0"
   },
   "engineStrict": true,
   "repository": {
@@ -52,9 +51,7 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
     "nodemon": "1.14.11",
-    "pkg": "4.3.0"
-  },
-  "pkg": {
-    "assets": "src/static/**/*"
+    "webpack": "3.10.0",
+    "webpack-node-externals": "1.6.0"
   }
 }
