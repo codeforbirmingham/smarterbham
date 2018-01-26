@@ -52,13 +52,7 @@ class WifiControl {
     return new Promise((resolve, reject) => {
       switch (this.platform) {
         case 'linux':
-          // exec('', (err, stdout) => {
-          //   if (err) {
-          //     reject(err);
-          //   } else {
-          //     resolve();
-          //   }
-          // });
+          reject('Unable to connect: Not implemented');
           break;
         case 'darwin':
           exec('networksetup -listallhardwareports | awk \'/^Hardware Port: (Wi-Fi|AirPort)$/{getline;print $2}\'', (listErr, port) => { // eslint-disable-line
