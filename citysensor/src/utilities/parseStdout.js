@@ -24,8 +24,8 @@ module.exports = {
     for (let i = 1, l = lines.length; i < l; i++) {
       const byteOffset = lines[i].length - byteLength(lines[i]);
       wifis.push({
-        mac: lines[i].substr(colMac + byteOffset, colRssi - colMac).trim(),
         ssid: lines[i].substr(0, colMac + byteOffset).trim(),
+        mac: lines[i].substr(colMac + byteOffset, colRssi - colMac).trim(),
         channel: lines[i].substr(colChannel + byteOffset, colHt - colChannel).trim(),
         signal_level: lines[i].substr(colRssi + byteOffset, colChannel - colRssi).trim(),
         security: lines[i].substr(colSec + byteOffset).trim() !== 'NONE',
@@ -47,11 +47,16 @@ module.exports = {
       const macIdx = l.indexOf(macLine) + 1; // get rid of extra white space
       const securityIdx = l.indexOf(securityLine);
       const ssidIdx = l.indexOf(ssidLine);
-      wifis.push({
-        mac: l.substr(macIdx + macLine.length, 17).trim(),
-        ssid: l.substr(ssidIdx + ssidLine.length).trim().replace(/['"]+/g, ''),
-        security: l.substr(securityIdx + securityLine.length, 3).trim() === 'on',
-      });
+      const ssid = l.substr(ssidIdx + ssidLine.length).replace(/['"]+/g, '').trim();
+
+      // don't include closed networks that broadcast \x00
+      if (!ssid.includes('\\x00')) {
+        wifis.push({
+          ssid,
+          mac: l.substr(macIdx + macLine.length, 17).trim(),
+          security: l.substr(securityIdx + securityLine.length, 3).trim() === 'on',
+        });
+      }
     });
     // remove any empty networks
     return _.reject(wifis, { ssid: '' });
