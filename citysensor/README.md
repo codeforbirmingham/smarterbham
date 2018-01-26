@@ -87,7 +87,7 @@ This will simulate the web GUI and update the thing's shadow to include new sens
 1. Run `HOST=<device ip> npm run dist` to compile app for distribution
 2. On your Pi device, we need to run as sudoer to SCP citysensor app from your computer to Pi's local var directory: `sudo scp <username>@<computer ip>:/path/to/smarterbham/citysensor/dist/dist-version.tar.gz /var/`
 3. On the Pi, navigate to `cd /var` and extract tarball with `sudo tar -xvf dist-version.tar.gz`
-4. Finally, run `HOST=<device ip> sudo npm start`
+4. Finally, run `sudo npm start`
 
 HOST environment variable is *required* to allow server to call itself in the API. This changes based on where the app is deployed and therefore is configured at runtime.
 
