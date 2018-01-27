@@ -54,7 +54,11 @@ class WifiControl {
     return new Promise((resolve, reject) => {
       switch (this.platform) {
         case 'linux':
-          exec(`sudo wpa_cli set_network 0 ssid "${ssid}" && sudo wpa_cli set_network 0 psk "${pass}" && sudo wpa_cli enable_network 0`, (err, stdout) => {
+          exec(`
+            sudo wpa_cli set_network 0 ssid "${ssid}"
+            && sudo wpa_cli set_network 0 psk "${pass}"
+            && sudo wpa_cli enable_network 0
+          `, (err, stdout) => {
             if (err || stdout.includes('Error')) {
               this.logger(stdout);
               reject(stdout);
