@@ -1,6 +1,5 @@
-const parseStdout = require('./parseStdout');
-
 const exec = require('child_process').exec;
+const parseStdout = require('./parseStdout');
 
 const macProvider = '/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport';
 
@@ -48,17 +47,29 @@ class WifiControl {
   }
 
   connect(accessPoint) {
-    this.logger(`Connecting to network: ${accessPoint.ssid}`);
+    const ssid = accessPoint.ssid;
+    const pass = accessPoint.password;
+    this.logger(`Connecting to network: ${ssid}`);
+
     return new Promise((resolve, reject) => {
       switch (this.platform) {
         case 'linux':
-          reject('Unable to connect: Not implemented');
+          exec(`sudo wpa_cli set_network 0 ssid "${ssid}" && sudo wpa_cli set_network 0 psk "${pass}" && sudo wpa_cli enable_network 0`, (err, stdout) => {
+            if (err || stdout.includes('Error')) {
+              this.logger(stdout);
+              reject(stdout);
+            } else {
+              this.logger('Connected!', stdout);
+              resolve(true);
+            }
+          });
           break;
         case 'darwin':
-          exec('networksetup -listallhardwareports | awk \'/^Hardware Port: (Wi-Fi|AirPort)$/{getline;print $2}\'', (listErr, port) => { // eslint-disable-line
+          // eslint-disable-next-line
+          exec('networksetup -listallhardwareports | awk \'/^Hardware Port: (Wi-Fi|AirPort)$/{getline;print $2}\'', (listErr, port) => {
             if (listErr) return reject(listErr);
             const iface = port.trim();
-            exec(`networksetup -setairportnetwork ${iface} ${accessPoint.ssid} ${accessPoint.password}`, (connectErr, stdout) => {
+            exec(`networksetup -setairportnetwork ${iface} ${ssid} ${pass}`, (connectErr, stdout) => {
               if (connectErr || stdout.includes('Error')) {
                 this.logger(stdout);
                 reject(stdout);
