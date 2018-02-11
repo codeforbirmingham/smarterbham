@@ -5,18 +5,18 @@
   "main": "src/server.js",
   "scripts": {
     "lint": "eslint src --ext=js",
-    "dev": "nodemon src/server.js",
     "build": "NODE_ENV=production next build src",
-    "start": "NODE_ENV=production node src/server.js",
+    "start": "NODE_ENV=development HOST=localhost node src/server.js",
     "predist": "rm -rf dist && npm run build",
-    "dist": "webpack -p --config src/webpack.server.config.js && npm run dist-assets",
-    "dist-assets": "cp -R ./{certs,package.json,package-lock.json} dist && cp -R src/.next dist/src/.next && cp -R src/static dist/src/static",
-    "postdist": "cd dist && npm i --production && tar -czvf dist-$npm_package_version.tar.gz -C ./ ."
+    "dist": "webpack -p --config src/webpack.server.config.js && npm run pkg",
+    "pkg": "pkg scripts/pkgApp.js -t node8-macos-x64 -o dist/startServer",
+    "postpkg": "cp -R ./{aws_config.json,certs,src/.next,src/static} dist",
+    "postdist": "tar -czvf dist/www-$npm_package_version.tar.gz -C dist ."
   },
+  "engineStrict": true,
   "engines": {
     "node": ">=8.9.0"
   },
-  "engineStrict": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/codeforbirmingham/smarterbham"
@@ -50,8 +50,11 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
-    "nodemon": "1.14.11",
+    "pkg": "4.3.0",
     "webpack": "3.10.0",
     "webpack-node-externals": "1.6.0"
+  },
+  "pkg": {
+    "assets": "src/static/**/*"
   }
 }

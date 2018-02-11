@@ -5,8 +5,6 @@ const nodeExternals = require('webpack-node-externals');
 
 const resolve = toPath => path.resolve(__dirname, toPath);
 
-if (!process.env.HOST) console.log('\x1b[31m', 'Missing required environment variable: HOST=', '\x1b[0m');
-
 module.exports = {
   target: 'node',
   node: {
@@ -15,7 +13,7 @@ module.exports = {
   },
   entry: resolve('server.js'),
   output: {
-    path: resolve('../dist/src'),
+    path: resolve('../dist'),
     filename: 'server.js',
   },
   module: {
@@ -25,7 +23,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.HOST': JSON.stringify(process.env.HOST),
+      'process.env.HOST': JSON.stringify('localhost'),
     }),
   ],
   externals: [nodeExternals()],
