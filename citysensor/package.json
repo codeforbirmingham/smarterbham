@@ -9,9 +9,10 @@
     "start": "NODE_ENV=development HOST=localhost node src/server.js",
     "predist": "rm -rf dist && npm run build",
     "dist": "webpack -p --config src/webpack.server.config.js && npm run pkg",
-    "pkg": "pkg scripts/pkgApp.js -t node8-macos-x64 -o dist/startServer",
-    "postpkg": "cp -R ./{aws_config.json,certs,src/.next,src/static} dist",
-    "postdist": "tar -czvf dist/www-$npm_package_version.tar.gz -C dist ."
+    "pkg": "pkg scripts/pkgApp.js -t node8-linux-armv6 -o dist/startServer",
+    "postpkg": "rm dist/server.js && cp -R ./{aws_config.json,certs,src/.next,src/static} dist",
+    "postdist": "tar -czvf dist/dist-$npm_package_version.tar.gz -C dist .",
+    "docker": "docker build -t citysensor ."
   },
   "engineStrict": true,
   "engines": {
