@@ -16,7 +16,7 @@
     "url": "https://github.com/codeforbirmingham/smarterbham/issues"
   },
   "dependencies": {
-    "aws-iot-device-sdk": "^2.0.0"
+    "aws-iot-device-sdk": "^2.15.0"
   },
   "devDependencies": {}
 }
