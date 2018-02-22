@@ -4,7 +4,7 @@
   "description": "birmingham city sensor project",
   "main": "src/server.js",
   "scripts": {
-    "lint": "eslint src --ext=js",
+    "lint": "eslint src",
     "build": "NODE_ENV=production next build src",
     "start": "NODE_ENV=development HOST=localhost node src/server.js",
     "predist": "rm -rf dist && npm run build",

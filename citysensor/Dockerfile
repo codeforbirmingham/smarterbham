@@ -1,21 +1,22 @@
-FROM resin/rpi-raspbian
+# https://resin.io/blog/building-arm-containers-on-any-x86-machine-even-dockerhub/
+# https://github.com/resin-io/node-arm/tree/master/debian/armv6hf
+# https://docs.resin.io/runtime/resin-base-images/
+FROM resin/raspberry-pi-node:latest
 
-# Set the working directory to /app
-WORKDIR /app
+# Set the working directory to /build
+WORKDIR /build
 
-# Copy the current directory contents into the container at /app
-COPY aws_config.json /app
-COPY package.json /app
-COPY certs /app
-COPY scripts /app
-COPY src /app
+# Copy app contents to the container
+COPY aws_config.json /build
+COPY package.json /build
+COPY certs /build/certs
+COPY scripts/pkgApp.js /build/scripts/pkgApp.js
+COPY src /build/src
 
-RUN apt-get -y update && apt-get -qy install \
-    wget \
-    build-essential
+# run cross-cpu compile step for building armv6 web gui
+RUN [ "cross-build-start" ]
 
-# https://github.com/alexellis/docker-arm/tree/master/images/armv6/node4.x-arm
-RUN wget \
-  https://nodejs.org/dist/v8.9.0/node-v8.9.0-linux-armv6l.tar.gz
-RUN tar -xvf node-*.tar.gz -C /usr/local \
-  --strip-components=1
+RUN npm i \
+    && npm run dist
+
+RUN [ "cross-build-end" ]
