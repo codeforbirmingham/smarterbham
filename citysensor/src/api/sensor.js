@@ -3,13 +3,12 @@
  * shadow on aws.
  */
 const fs = require('fs');
-const path = require('path');
 const aws = require('aws-iot-device-sdk');
 const _ = require('lodash');
 const Logger = require('../utilities/logger');
 const awsConfig = require('../../aws_config.json');
 
-const rootDir = path.join(__dirname, '..');
+const wpaSupplicant = './wpa_supplicant.conf';
 
 class Sensor {
   constructor() {
@@ -58,7 +57,7 @@ class Sensor {
   }
 
   register() {
-    if (this.socket && fs.existsSync(`${rootDir}/ap.json`)) {
+    if (this.socket && fs.existsSync(wpaSupplicant)) {
       this.shadow.register(awsConfig.thingName, { ignoreDeltas: true }, (err, failedTopics) => {
         if (_.isEmpty(err) && _.isEmpty(failedTopics)) {
           Logger.info(`registered ${awsConfig.thingName} with AWS`);

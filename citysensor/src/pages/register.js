@@ -16,6 +16,8 @@ import {
 } from '../components/Notification';
 import Layout from '../components/Layout';
 
+NProgress.configure({ showSpinner: false });
+
 const styles = () => ({
   item: {
     textAlign: 'center',

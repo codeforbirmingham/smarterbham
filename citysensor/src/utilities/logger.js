@@ -1,16 +1,14 @@
 const fs = require('fs');
-const path = require('path');
 const _ = require('lodash');
 
-const logPath = path.join(__dirname, '../log');
 const insertLogData = (data, logLevel) => {
   const parsedData = _.isObject(data) ? JSON.stringify(data) : data;
-  const logData = `${new Date()} node: ${parsedData}\n`;
-  fs.appendFileSync(`${logPath}/node-${logLevel}.log`, logData);
+  const logData = `${new Date()} [${logLevel}]: ${parsedData}\n`;
+  fs.appendFileSync('citysensor.log', logData, 'utf8');
 };
 
 module.exports = {
-  error: data => insertLogData(data, 'error'),
-  info: data => insertLogData(data, 'info'),
-  warn: data => insertLogData(data, 'warn'),
+  error: data => insertLogData(data, 'ERROR'),
+  info: data => insertLogData(data, 'INFO'),
+  warn: data => insertLogData(data, 'WARN'),
 };

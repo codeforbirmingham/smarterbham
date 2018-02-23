@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 const nextJs = require('next');
-const path = require('path');
 const fs = require('fs');
 const Server = require('http').Server;
 const express = require('express');
@@ -10,6 +9,7 @@ const networkApi = require('./api/networks');
 const Logger = require('./utilities/logger');
 const Sensor = require('./api/sensor');
 
+const wpaSupplicant = './wpa_supplicant.conf';
 const dev = process.env.NODE_ENV !== 'production';
 const dir = dev ? 'src' : '.';
 const nextApp = nextJs({
@@ -39,7 +39,7 @@ nextApp.prepare().then(() => {
   */
   // handle server-side redirects based on registered condition
   app.get('/', (req, res) => {
-    if (fs.existsSync(`${__dirname}/ap.json`)) {
+    if (fs.existsSync(wpaSupplicant)) {
       handle(req, res);
     } else {
       res.redirect('/register');
@@ -47,7 +47,7 @@ nextApp.prepare().then(() => {
   });
 
   app.get('/register', (req, res) => {
-    if (fs.existsSync(`${__dirname}/ap.json`)) {
+    if (fs.existsSync(wpaSupplicant)) {
       res.redirect('/');
     } else {
       handle(req, res);

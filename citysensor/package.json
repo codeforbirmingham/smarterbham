@@ -3,16 +3,24 @@
   "version": "0.9.0",
   "description": "birmingham city sensor project",
   "main": "src/server.js",
+  "bin" : "dist/server.js",
   "scripts": {
     "lint": "eslint src",
     "build": "NODE_ENV=production next build src",
     "start": "NODE_ENV=development HOST=localhost node src/server.js",
     "predist": "rm -rf dist && npm run build",
     "dist": "webpack -p --config src/webpack.server.config.js && npm run pkg",
-    "pkg": "pkg scripts/pkgApp.js -t node8-linux-armv6 -o dist/startServer",
-    "postpkg": "rm dist/server.js && cp -R ./{aws_config.json,certs,src/.next,src/static} dist",
     "postdist": "tar -czvf dist/dist-$npm_package_version.tar.gz -C dist .",
+    "pkg": "pkg scripts/pkgApp.js -t node8 -o dist/startServer",
+    "postpkg": "rm dist/server.js && cp -R ./{aws_config.json,certs,src/.next,src/static} dist",
     "docker": "docker build -t citysensor ."
+  },
+  "pkg": {
+    "assets": [
+      ".next",
+      "static"
+    ],
+    "targets": ["node8"]
   },
   "engineStrict": true,
   "engines": {
@@ -54,8 +62,5 @@
     "pkg": "4.3.0",
     "webpack": "3.10.0",
     "webpack-node-externals": "1.6.0"
-  },
-  "pkg": {
-    "assets": "src/static/**/*"
   }
 }

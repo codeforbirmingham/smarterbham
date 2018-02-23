@@ -5,5 +5,5 @@ dist/
 **/node_modules/
 **/.next/
 **/*.log
-**/ap.json
+**/wpa_supplicant.conf
 *.DS_Store

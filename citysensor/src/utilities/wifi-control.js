@@ -48,7 +48,7 @@ class WifiControl {
 
   connect(accessPoint) {
     const ssid = accessPoint.ssid;
-    const pass = accessPoint.password;
+    const pass = accessPoint.psk;
     this.logger(`Connecting to network: ${ssid}`);
 
     return new Promise((resolve, reject) => {
