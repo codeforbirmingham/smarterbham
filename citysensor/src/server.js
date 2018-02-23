@@ -62,6 +62,7 @@ nextApp.prepare().then(() => {
       Logger.error(err);
       throw err;
     }
+    // eslint-disable-next-line
     console.log(`> Ready on http://${process.env.HOST}:3000`);
   });
 }).catch(err => Logger.error(`Failed to start server: ${err}`));

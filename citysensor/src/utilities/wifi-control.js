@@ -95,6 +95,7 @@ class WifiControl {
 
   logger(msg) {
     if (this.debug) {
+      // eslint-disable-next-line
       console.log(msg);
     }
   }
